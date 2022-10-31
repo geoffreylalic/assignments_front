@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from '../../shared/assignements.service';
 import { Assignment } from '../assignment.model';
 
@@ -12,15 +12,19 @@ export class AssignmentDetailComponent implements OnInit {
   @Input() assignmentTransmis!: Assignment | undefined;
 
   constructor(private assingmentsService: AssignmentsService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     const id: number = this.route.snapshot.params['id']
   }
 
   onAssignmentRendu() {
-    if (!this.assignmentTransmis) return
-    this.assignmentTransmis.statut = 'true';
+    if (this.assignmentTransmis?.statut === 'pas commencé' || this.assignmentTransmis?.statut === 'en cours'){
+      this.assignmentTransmis.statut = 'terminé'
+    }
+    
+    // this.router.navigate(['/home']);
   }
 
   onDeleteAssignment() {

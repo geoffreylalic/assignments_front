@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AssignmentsService } from '../shared/assignements.service'
 import { Assignment } from './assignment.model';
@@ -18,7 +19,8 @@ export class AssignmentsComponent implements OnInit {
   assignmentsPasCommence: Assignment[] = []
   assignmentsTermine: Assignment[] = []
 
-  constructor(private assignmentsService: AssignmentsService) { }
+  constructor(private assignmentsService: AssignmentsService,
+    private router: Router) { }
 
   ngOnInit(): void {
     console.log("appelé à l'initialisation du composant");
@@ -39,6 +41,7 @@ export class AssignmentsComponent implements OnInit {
   assignmentClique(assignment: Assignment) {
     console.log("assignmentClique : " + assignment.nom);
     this.assignmentSelectionne = assignment;
+    // this.router.navigate[`assignment/${assignment.id}`]
   }
 
   onAddAssignmentBtnClick() {

@@ -13,6 +13,7 @@ export class AssignmentsService {
   ]
   assignments: Assignment[] = [
     {
+      id:0,
       nom: 'Devoir Angular de Mr Buffa',
       professeur: 'M. Buffa',
       dateDeRendu: new Date('2022-11-30'),
@@ -20,6 +21,7 @@ export class AssignmentsService {
       description: "j'ai preque terminé",
     }, 
     {
+      id:1,
       nom: 'Devoir Angular de Mr Buffa',
       professeur: 'M. Buffa',
       dateDeRendu: new Date('2022-11-30'),
@@ -27,6 +29,7 @@ export class AssignmentsService {
       description: "j'ai preque terminé",
     },
     {
+      id:2,
       nom: 'Devoir WebComponents de Mr Buffa',
       professeur: 'M. Buffa',
       dateDeRendu: new Date('2022-09-30'),
@@ -34,6 +37,7 @@ export class AssignmentsService {
       description: "Quelle est cette chose ? ",
     },
     {
+      id:3,
       nom: 'Devoir WebComponents de Mr Buffa',
       professeur: 'M. Buffa',
       dateDeRendu: new Date('2022-09-30'),
@@ -41,6 +45,7 @@ export class AssignmentsService {
       description: "Quelle est cette chose ? ",
     },
     {
+      id:4,
       nom: 'Devoir BD de Mr Mopolo',
       professeur: 'M. Mopolo',
       dateDeRendu: new Date('2022-09-30'),
@@ -48,6 +53,7 @@ export class AssignmentsService {
       description: "Comment ca mon reufs ?",
     },
     {
+      id:5,
       nom: 'Devoir BD de Mr Mopolo',
       professeur: 'M. Mopolo',
       dateDeRendu: new Date('2022-09-30'),
