@@ -1,0 +1,29 @@
+table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  
+  
+  .pas-commencé {
+    color:red;
+  }
+  .en-cours{
+    color: orange;
+  }
+  .terminé {
+    color:green;
+  }
+  
+  .container{
+    display: flex;
+  }
+  
+  .assignments-container{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 0 3% 0 3%;
+  }
+  
+  .card-container{
+  }
