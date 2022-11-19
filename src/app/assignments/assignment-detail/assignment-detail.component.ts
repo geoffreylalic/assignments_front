@@ -9,27 +9,43 @@ import { Assignment } from '../assignment.model';
   styleUrls: ['./assignment-detail.component.css']
 })
 export class AssignmentDetailComponent implements OnInit {
-  @Input() assignmentTransmis!: Assignment | undefined;
+  assignmentTransmis!: Assignment | undefined;
 
-  constructor(private assingmentsService: AssignmentsService,
+  constructor(private assignmentsService: AssignmentsService,
     private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
     const id: number = this.route.snapshot.params['id']
+    console.log(id)
+    this.getAssignments()
+  }
+
+  getAssignments() {
+    this.assignmentsService.getAssignments().subscribe((assignments) => {
+      console.log('ici', assignments)
+      let a = assignments.find((a) => a.id === this.route.snapshot.params['id'])
+      console.log(a)
+      this.assignmentTransmis = assignments.find((a) => a.id == this.route.snapshot.params['id'])
+      console.log(this.assignmentTransmis)
+    })
+  }
+
+  onEditAssignment(assignment:Assignment){
+    this.router.navigateByUrl(`assignment/${assignment.id}/edit?id=oui`,)
   }
 
   onAssignmentRendu() {
-    if (this.assignmentTransmis?.statut === 'pas commencé' || this.assignmentTransmis?.statut === 'en cours'){
+    if (this.assignmentTransmis?.statut === 'pas commencé' || this.assignmentTransmis?.statut === 'en cours') {
       this.assignmentTransmis.statut = 'terminé'
     }
-    
+
     // this.router.navigate(['/home']);
   }
 
   onDeleteAssignment() {
     if (!this.assignmentTransmis) return
-    this.assingmentsService.deleteAssignment(this.assignmentTransmis).subscribe(message => {
+    this.assignmentsService.deleteAssignment(this.assignmentTransmis).subscribe(message => {
       console.log('message suppression', message)
       this.assignmentTransmis = undefined
     })

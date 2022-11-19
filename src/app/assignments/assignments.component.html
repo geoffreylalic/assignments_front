@@ -4,50 +4,56 @@
   <!-- assignments pas commencé -->
   <div [ngClass]="'assignments-container'">
     <mat-list *ngFor="let a of assignmentsPasCommence">
-      <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
-        <mat-card-title>{{a.nom}}</mat-card-title>
-        <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
-        <mat-chip-list aria-label="Fish selection">
-          <mat-chip [ngStyle]="{'background-color': 'red'}" selected>
-            {{a.statut}}
-          </mat-chip>
-        </mat-chip-list>
-        <p>
-          {{a.professeur}}
-        </p>
-      </mat-card>
+      <a routerLink="assignment/{{a.id}}">
+        <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
+          <mat-card-title>{{a.nom}}</mat-card-title>
+          <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip [ngStyle]="{'background-color': 'red'}" selected>
+              {{a.statut}}
+            </mat-chip>
+          </mat-chip-list>
+          <p>
+            {{a.professeur}}
+          </p>
+        </mat-card>
+      </a>
     </mat-list>
   </div>
 
   <!-- assignments en cours -->
   <div [ngClass]="'assignments-container'">
     <mat-list *ngFor="let a of assignmentsEnCours">
-      <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
-        <mat-card-title>{{a.nom}}</mat-card-title>
-        <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
-        <mat-chip-list aria-label="Fish selection">
-          <mat-chip [ngStyle]="{'background-color' :'orange'}" selected>{{a.statut}}</mat-chip>
-        </mat-chip-list>
-        <p>
-          {{a.professeur}}
-        </p>
-      </mat-card>
+      <a routerLink="assignment/{{a.id}}">
+        <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
+          <mat-card-title>{{a.nom}}</mat-card-title>
+          <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip [ngStyle]="{'background-color' :'orange'}" selected>{{a.statut}}</mat-chip>
+          </mat-chip-list>
+          <p>
+            {{a.professeur}}
+          </p>
+        </mat-card>
+      </a>
     </mat-list>
   </div>
 
   <!-- assignments terminé -->
   <div [ngClass]="'assignments-container'">
     <mat-list *ngFor="let a of assignmentsTermine">
-      <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
-        <mat-card-title>{{a.nom}}</mat-card-title>
-        <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
-        <mat-chip-list aria-label="Fish selection">
-          <mat-chip [ngStyle]="{'background-color' : 'green'}" selected>{{a.statut}}</mat-chip>
-        </mat-chip-list>
-      </mat-card>
+      <a routerLink="assignment/{{a.id}}">
+        <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
+          <mat-card-title>{{a.nom}}</mat-card-title>
+          <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip [ngStyle]="{'background-color' : 'green'}" selected>{{a.statut}}</mat-chip>
+          </mat-chip-list>
+        </mat-card>
+      </a>
     </mat-list>
-    <app-assignment-detail [assignmentTransmis]="assignmentSelectionne">
-    </app-assignment-detail>
+    <!-- <app-assignment-detail [assignmentTransmis]="assignmentSelectionne"> -->
+    <!-- </app-assignment-detail> -->
   </div>
 
 </main>
