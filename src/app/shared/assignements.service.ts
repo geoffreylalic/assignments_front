@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
-
+import { HTTP } from '../utils/http-common'
 @Injectable({
   providedIn: 'root'
 })
@@ -11,56 +11,7 @@ export class AssignmentsService {
     'en cours',
     'terminé'
   ]
-  assignments: Assignment[] = [
-    {
-      id:0,
-      nom: 'Devoir Angular de Mr Buffa',
-      professeur: 'M. Buffa',
-      dateDeRendu: new Date('2022-11-30'),
-      statut: 'pas commencé',
-      description: "j'ai preque terminé",
-    }, 
-    {
-      id:1,
-      nom: 'Devoir Angular de Mr Buffa',
-      professeur: 'M. Buffa',
-      dateDeRendu: new Date('2022-11-30'),
-      statut: 'pas commencé',
-      description: "j'ai preque terminé",
-    },
-    {
-      id:2,
-      nom: 'Devoir WebComponents de Mr Buffa',
-      professeur: 'M. Buffa',
-      dateDeRendu: new Date('2022-09-30'),
-      statut: 'en cours',
-      description: "Quelle est cette chose ? ",
-    },
-    {
-      id:3,
-      nom: 'Devoir WebComponents de Mr Buffa',
-      professeur: 'M. Buffa',
-      dateDeRendu: new Date('2022-09-30'),
-      statut: 'en cours',
-      description: "Quelle est cette chose ? ",
-    },
-    {
-      id:4,
-      nom: 'Devoir BD de Mr Mopolo',
-      professeur: 'M. Mopolo',
-      dateDeRendu: new Date('2022-09-30'),
-      statut: 'terminé',
-      description: "Comment ca mon reufs ?",
-    },
-    {
-      id:5,
-      nom: 'Devoir BD de Mr Mopolo',
-      professeur: 'M. Mopolo',
-      dateDeRendu: new Date('2022-09-30'),
-      statut: 'terminé',
-      description: "Comment ca mon reufs ?",
-    }
-  ]
+  assignments: Assignment[] = []
 
   constructor() { }
 
@@ -69,7 +20,13 @@ export class AssignmentsService {
   }
 
   addAssignments(assignment: Assignment): Observable<string> {
-    this.assignments.push(assignment)
+    HTTP.post("/assignments/", {
+      nom: assignment.nom,
+      professeur: assignment.professeur,
+      dateDeRendu: assignment.dateDeRendu,
+      statut: assignment.statut,
+      description: assignment.description,
+    }).then((res)=>{console.log(res)})
     return of('ajout réussi')
   }
 

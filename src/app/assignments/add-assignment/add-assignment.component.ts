@@ -26,6 +26,7 @@ export class AddAssignmentComponent implements OnInit {
     nouvelAssignment.nom = this.nomDevoir;
     nouvelAssignment.dateDeRendu = this.dateDeRendu;
     nouvelAssignment.statut = 'false';
+    
     // le tableau est chez le papa comment faire ?
     //this.assignments.push(nouvelAssignment);
 
