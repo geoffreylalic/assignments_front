@@ -4,7 +4,7 @@
   <!-- assignments pas commencé -->
   <div [ngClass]="'assignments-container'">
     <mat-list *ngFor="let a of assignmentsPasCommence">
-      <a routerLink="assignment/{{a.id}}">
+      <a routerLink="assignment/{{a._id}}">
         <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
           <mat-card-title>{{a.nom}}</mat-card-title>
           <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
@@ -24,7 +24,7 @@
   <!-- assignments en cours -->
   <div [ngClass]="'assignments-container'">
     <mat-list *ngFor="let a of assignmentsEnCours">
-      <a routerLink="assignment/{{a.id}}">
+      <a routerLink="assignment/{{a._id}}">
         <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
           <mat-card-title>{{a.nom}}</mat-card-title>
           <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>
@@ -42,7 +42,7 @@
   <!-- assignments terminé -->
   <div [ngClass]="'assignments-container'">
     <mat-list *ngFor="let a of assignmentsTermine">
-      <a routerLink="assignment/{{a.id}}">
+      <a routerLink="assignment/{{a._id}}">
         <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
           <mat-card-title>{{a.nom}}</mat-card-title>
           <h3 mat-subheader>{{a.dateDeRendu | date}}</h3>

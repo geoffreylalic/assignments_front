@@ -1,5 +1,5 @@
 export class Assignment {
-  id!:number;
+  _id!:number; // générer par le back
   nom!: string;
   professeur!: string;
   dateDeRendu!: Date;

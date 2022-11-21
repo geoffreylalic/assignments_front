@@ -10,29 +10,30 @@ import { Assignment } from '../assignment.model';
 })
 export class AssignmentDetailComponent implements OnInit {
   assignmentTransmis!: Assignment | undefined;
+  id:String 
 
   constructor(private assignmentsService: AssignmentsService,
     private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit(): void {
-    const id: number = this.route.snapshot.params['id']
-    console.log(id)
-    this.getAssignments()
+    this.id = this.route.snapshot.params['id']
+    console.log("id ", this.id)
+    this.getAssignment()
   }
 
-  getAssignments() {
-    this.assignmentsService.getAssignments().subscribe((assignments) => {
-      console.log('ici', assignments)
-      let a = assignments.find((a) => a.id === this.route.snapshot.params['id'])
+  getAssignment() {
+    this.assignmentsService.getAssignment(this.id).subscribe((assignment) => {
+      console.log('ici', assignment)
+      let a = assignment.find((a) => a.id === this.route.snapshot.params['id'])
       console.log(a)
-      this.assignmentTransmis = assignments.find((a) => a.id == this.route.snapshot.params['id'])
+      this.assignmentTransmis = assignment.find((a) => a.id == this.route.snapshot.params['id'])
       console.log(this.assignmentTransmis)
     })
   }
 
   onEditAssignment(assignment:Assignment){
-    this.router.navigateByUrl(`assignment/${assignment.id}/edit?id=oui`,)
+    this.router.navigateByUrl(`assignment/${assignment._id}/edit?id=oui`,)
   }
 
   onAssignmentRendu() {

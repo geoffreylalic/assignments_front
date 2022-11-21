@@ -39,9 +39,8 @@ export class AssignmentsComponent implements OnInit {
   }
 
   assignmentClique(assignment: Assignment) {
-    console.log("assignmentClique : " + assignment.nom);
     this.assignmentSelectionne = assignment;
-    // this.router.navigate[`assignment/${assignment.id}`]
+    this.router.navigate[`assignment/${assignment._id}`]
   }
 
   onAddAssignmentBtnClick() {

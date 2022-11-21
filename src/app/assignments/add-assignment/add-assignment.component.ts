@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AssignmentsService } from 'src/app/shared/assignements.service';
 import { Assignment } from '../assignment.model';
 
 @Component({
@@ -10,23 +11,30 @@ export class AddAssignmentComponent implements OnInit {
   @Output() nouvelAssignment = new EventEmitter<Assignment>();
 
   // Pour le formulaire
-  nomDevoir = "";
+  nom = "";
+  professeur = "";
+  statuts = ['pas commencé', 'en cours', 'terminé']
+  statut = ''
+  description = '';
   dateDeRendu!: Date;
-  constructor() { }
+  constructor(private assignmentService: AssignmentsService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log("onSubmit : " + this.nomDevoir +
+    console.log("onSubmit : " + this.nom +
       " date de rendu : " + this.dateDeRendu);
 
     // On ajoute un nouvel assignment
     let nouvelAssignment = new Assignment();
-    nouvelAssignment.nom = this.nomDevoir;
+    nouvelAssignment.nom = this.nom;
     nouvelAssignment.dateDeRendu = this.dateDeRendu;
-    nouvelAssignment.statut = 'false';
-    
+    nouvelAssignment.statut = this.statut;
+    nouvelAssignment.professeur = this.professeur;
+    nouvelAssignment.description = this.description
+    this.assignmentService.addAssignments(nouvelAssignment)
+
     // le tableau est chez le papa comment faire ?
     //this.assignments.push(nouvelAssignment);
 
