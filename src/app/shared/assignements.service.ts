@@ -24,7 +24,7 @@ export class AssignmentsService {
             resolve(this.assignments)
           })
           .catch((e) => {
-            console.error(e)
+            // console.error(e)
             reject(e)
           })
       })

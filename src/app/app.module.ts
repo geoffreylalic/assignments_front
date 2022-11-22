@@ -14,7 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { AppComponent } from './app.component';
@@ -43,7 +44,7 @@ const routes: Routes = [
   {
     path: 'assignment/:id/edit',
     component: EditAssignmentComponent,
-    canActivate:[AuthGuard]
+    canActivate: [AuthGuard]
   }
 ]
 @NgModule({
@@ -64,7 +65,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MatChipsModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

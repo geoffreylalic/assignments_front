@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from '../../shared/assignements.service';
 import { Assignment } from '../assignment.model';
@@ -9,12 +10,14 @@ import { Assignment } from '../assignment.model';
   styleUrls: ['./assignment-detail.component.css']
 })
 export class AssignmentDetailComponent implements OnInit {
-  assignmentTransmis!: Assignment | undefined;
-  id:String 
+  id: String = ''
+  assignment: Assignment = new Assignment()
+  isLoading: Boolean = true
 
   constructor(private assignmentsService: AssignmentsService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
@@ -23,32 +26,24 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   getAssignment() {
+    this.isLoading = true
     this.assignmentsService.getAssignment(this.id).subscribe((assignment) => {
       console.log('ici', assignment)
-      let a = assignment.find((a) => a.id === this.route.snapshot.params['id'])
-      console.log(a)
-      this.assignmentTransmis = assignment.find((a) => a.id == this.route.snapshot.params['id'])
-      console.log(this.assignmentTransmis)
+      this.assignment = assignment
+      // this.isLoading = false
     })
+    console.log("fin")
   }
 
-  onEditAssignment(assignment:Assignment){
+  onEditAssignment(assignment: Assignment) {
     this.router.navigateByUrl(`assignment/${assignment._id}/edit?id=oui`,)
   }
 
   onAssignmentRendu() {
-    if (this.assignmentTransmis?.statut === 'pas commencé' || this.assignmentTransmis?.statut === 'en cours') {
-      this.assignmentTransmis.statut = 'terminé'
-    }
-
     // this.router.navigate(['/home']);
   }
 
   onDeleteAssignment() {
-    if (!this.assignmentTransmis) return
-    this.assignmentsService.deleteAssignment(this.assignmentTransmis).subscribe(message => {
-      console.log('message suppression', message)
-      this.assignmentTransmis = undefined
-    })
   }
+
 }

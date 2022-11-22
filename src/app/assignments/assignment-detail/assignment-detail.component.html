@@ -1,12 +1,15 @@
-<mat-card *ngIf="assignmentTransmis" class="bottom">
-    <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
-    <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date}}</mat-card-subtitle>
-    <mat-checkbox *ngIf="!assignmentTransmis.statut" [checked]="assignmentTransmis.statut" (click)="onAssignmentRendu()">
-      Devoir rendu
-    </mat-checkbox>
-    <button mat-flat-button color="accent" (click)="onDeleteAssignment()"> Supprimer Assignment
-    </button>
-    <button mat-flat-button color="accent" (click)="onEditAssignment(assignmentTransmis)"> Edit Assignment
-    </button>
-  
-  </mat-card>
+<mat-card class="bottom" *ngIf="!isLoading; else loadingBlock">
+  <mat-card-title>
+    {{assignment.nom}}
+  </mat-card-title>
+  <mat-card-content>
+    {{assignment.description}}
+  </mat-card-content>
+  <mat-card-footer>
+    {{assignment.professeur}}
+  </mat-card-footer>
+</mat-card>
+
+<ng-template #loadingBlock>
+  <mat-spinner></mat-spinner>
+</ng-template>
