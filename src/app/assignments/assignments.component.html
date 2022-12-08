@@ -1,57 +1,38 @@
 <main *ngIf="!formVisible" [ngClass]="'container'">
-  <!-- assignments pas commencé -->
-  <div [ngClass]="'assignments-container'">
-    <mat-list *ngFor="let a of assignmentsPasCommence">
-      <a routerLink="assignment/{{a._id}}">
-        <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
-          <mat-card-title>{{a.nom}}</mat-card-title>
-          <h3 mat-subheader>Pour le:  {{a.dateDeRendu | date}}</h3>
-          <mat-chip-list aria-label="Fish selection">
-            <mat-chip [ngStyle]="{'background-color': 'red'}" selected>
-              {{a.statut}}
-            </mat-chip>
-          </mat-chip-list>
-          <p>
-            {{a.professeur}}
-          </p>
-        </mat-card>
-      </a>
-    </mat-list>
-  </div>
+  <mat-list *ngFor="let assignment of assginments | keyvalue ">
+    <div [ngClass]="'assignments-container'">
+      <mat-list *ngFor="let a of assignment.value" [ngClass]="'list-card'">
 
-  <!-- assignments en cours -->
-  <div [ngClass]="'assignments-container'">
-    <mat-list *ngFor="let a of assignmentsEnCours">
-      <a routerLink="assignment/{{a._id}}">
-        <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
-          <mat-card-title>{{a.nom}}</mat-card-title>
-          <h3 mat-subheader>Pour le: {{a.dateDeRendu | date}}</h3>
-          <mat-chip-list aria-label="Fish selection">
-            <mat-chip [ngStyle]="{'background-color' :'orange'}" selected>{{a.statut}}</mat-chip>
-          </mat-chip-list>
-          <p>
-            {{a.professeur}}
-          </p>
+        <mat-card [ngClass]="'card-container'">
+          <mat-card-title [ngClass]="'card-title'">
+            <a [ngClass]="'router-link'" routerLink="assignment/{{a._id}}">
+              <div>
+                {{a.nom}}
+              </div>
+            </a>
+            <div>
+              <button mat-mini-fab color="">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab color="warn" (click)="handleDelete(a)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-title>
+          <a [ngClass]="'router-link'" routerLink="assignment/{{a._id}}">
+            <h3 mat-subheader>Pour le: {{a.dateDeRendu | date}}</h3>
+            <mat-chip-list>
+              <mat-chip [ngClass]="
+                a.statut === 'pas commencé' ? 'pas-commence':
+                a.statut === 'en cours' ? 'en-cours' :
+                a.statut === 'terminé' ? 'termine' : 'termine' " selected>
+                {{a.statut}}
+              </mat-chip>
+            </mat-chip-list>
+          </a>
         </mat-card>
-      </a>
-    </mat-list>
-  </div>
-
-  <!-- assignments terminé -->
-  <div [ngClass]="'assignments-container'">
-    <mat-list *ngFor="let a of assignmentsTermine">
-      <a [ngClass]="'router-link'" routerLink="assignment/{{a._id}}">
-        <mat-card [ngClass]="'card-container'" (click)="assignmentClique(a)">
-          <mat-card-title [ngClass]="'card-title'">{{a.nom}}</mat-card-title>
-          <h3 mat-subheader>Pour le: {{a.dateDeRendu | date}}</h3>
-          <mat-chip-list aria-label="Fish selection">
-            <mat-chip [ngStyle]="{'background-color' : 'green'}" selected>{{a.statut}}</mat-chip>
-          </mat-chip-list>
-        </mat-card>
-      </a>
-    </mat-list>
-  </div> 
-  
-  
+      </mat-list>
+    </div>
+  </mat-list>
 
 </main>

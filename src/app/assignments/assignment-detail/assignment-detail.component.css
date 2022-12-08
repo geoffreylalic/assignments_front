@@ -1,0 +1,28 @@
+.mat-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card{
+    width: 40%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+.date-rendu{
+    color: red;
+    font-weight: bold;
+}
+
+.pas-commence{
+    background-color: red  !important;
+}
+
+.en-cours{
+    background-color: orange  !important;
+}
+
+.termine{
+    background-color: green  !important;
+}

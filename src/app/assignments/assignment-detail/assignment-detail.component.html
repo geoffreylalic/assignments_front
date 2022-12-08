@@ -1,18 +1,35 @@
-<mat-card class="bottom" *ngIf="errorMessage !== '' else nonErrorBlock">
- {{errorMessage}}
+<mat-card *ngIf="errorMessage !== '' else nonLoadingBlock">
+  {{errorMessage}}
 </mat-card>
 
-<ng-template #nonErrorBlock>
-  <mat-card class="bottom" *ngIf="!isLoading; else loadingBlock">
-    <mat-card-title>
-      {{assignment.nom}}
+<ng-template class="container" #nonLoadingBlock>
+  <mat-card class="card" *ngIf="!isLoading; else loadingBlock">
+    <mat-card-title class="mat-title">
+      <div>
+        {{assignment.nom}} - {{assignment.professeur}}
+      </div>
+      <button mat-mini-fab aria-label="Example icon button with a filter list icon">
+        <mat-icon>edit</mat-icon>
+      </button>
     </mat-card-title>
     <mat-card-content>
-      {{assignment.description}}
-      {{assignment.statut}}
+      <div>
+        {{assignment.description}}
+      </div>
+
     </mat-card-content>
     <mat-card-footer>
-      {{assignment.professeur}}
+      <mat-chip-list>
+        <mat-chip [ngClass]="
+        assignment.statut === 'pas commencé' ? 'pas-commence':
+        assignment.statut === 'en cours' ? 'en-cours' :
+        assignment.statut === 'terminé' ? 'termine' : 'termine' " selected>
+          {{assignment.statut}}
+        </mat-chip>
+      </mat-chip-list>
+      <div>
+        Pour le <span class="date-rendu">{{assignment.dateDeRendu}}</span>
+      </div>
     </mat-card-footer>
   </mat-card>
 </ng-template>

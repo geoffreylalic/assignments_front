@@ -14,6 +14,11 @@ export class AssignmentsComponent implements OnInit {
 
   formVisible = false;
 
+  assginments = {
+    assignmentsEnCours: <Assignment[]>[],
+    assignmentsPasCommence: <Assignment[]>[],
+    assignmentsTermine: <Assignment[]>[]
+  }
   assignmentsEnCours: Assignment[] = []
   assignmentsPasCommence: Assignment[] = []
   assignmentsTermine: Assignment[] = []
@@ -34,13 +39,24 @@ export class AssignmentsComponent implements OnInit {
           this.assignmentsTermine.push(assignment)
         }
       })
+
+      assignments.map(assignment => {
+        if (assignment.statut === 'pas commencé') {
+          this.assginments.assignmentsPasCommence.push(assignment)
+        } else if (assignment.statut === 'en cours') {
+          this.assginments.assignmentsEnCours.push(assignment)
+        }
+        else if (assignment.statut === 'terminé') {
+          this.assginments.assignmentsTermine.push(assignment)
+        }
+      })
     }))
   }
 
-  assignmentClique(assignment: Assignment) {
-    this.assignmentSelectionne = assignment;
-    this.router.navigate[`assignment/${assignment._id}`]
-  }
+  // assignmentClique(assignment: Assignment) {
+  //   this.assignmentSelectionne = assignment;
+  //   this.router.navigate[`assignment/${assignment._id}`]
+  // }
 
   onAddAssignmentBtnClick() {
     this.formVisible = true;
@@ -51,5 +67,10 @@ export class AssignmentsComponent implements OnInit {
     //   this.formVisible = false;
     // })
   }
-  
+
+  handleDelete(assignment){
+    this.assignmentsService.deleteAssignment(assignment).subscribe(data => console.log("delted data", data))
+    console.log("delete clicked", assignment)
+  }
+
 }

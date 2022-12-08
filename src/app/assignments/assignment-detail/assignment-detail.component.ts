@@ -29,8 +29,9 @@ export class AssignmentDetailComponent implements OnInit {
   getAssignment() {
     this.isLoading = true
     this.assignmentsService.getAssignment(this.id).subscribe((assignment) => {
-      console.log('ici', assignment)
+      console.log("ici ", assignment)
       this.assignment = assignment
+      this.assignment.dateDeRendu = this.formatDate(assignment.dateDeRendu)
       this.isLoading = false
     },
       (error) => {
@@ -42,6 +43,15 @@ export class AssignmentDetailComponent implements OnInit {
         this.isLoading = true
       })
     console.log("fin")
+  }
+
+  formatDate(date): any{
+    if (date === null){
+      return 'pas de date'
+    }
+    let d = new Date(date)
+    return `${d.getDate().toString().padStart(2,'0')}/${d.getMonth().toString().padStart(2,'0')}/${d.getFullYear()}`;
+
   }
 
   onEditAssignment(assignment: Assignment) {
