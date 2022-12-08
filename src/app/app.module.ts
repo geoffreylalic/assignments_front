@@ -16,6 +16,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 import { AppComponent } from './app.component';
@@ -27,7 +28,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { compileClassMetadata } from '@angular/compiler';
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/auth.guard';
-
+import { HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const routes: Routes = [
   {
@@ -53,7 +55,7 @@ const routes: Routes = [
     AssignmentsComponent,
     AssignmentDetailComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,9 @@ const routes: Routes = [
     MatDialogModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatToolbarModule, 
+    HttpClientModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

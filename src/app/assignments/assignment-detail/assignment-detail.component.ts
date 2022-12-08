@@ -13,6 +13,7 @@ export class AssignmentDetailComponent implements OnInit {
   id: String = ''
   assignment: Assignment = new Assignment()
   isLoading: Boolean = true
+  errorMessage: String = ''
 
   constructor(private assignmentsService: AssignmentsService,
     private route: ActivatedRoute,
@@ -30,8 +31,16 @@ export class AssignmentDetailComponent implements OnInit {
     this.assignmentsService.getAssignment(this.id).subscribe((assignment) => {
       console.log('ici', assignment)
       this.assignment = assignment
-      // this.isLoading = false
-    })
+      this.isLoading = false
+    },
+      (error) => {
+        console.log("error --- ", error)
+        if (error) {
+          this.errorMessage = 'Network error'
+          console.log("message error", this.errorMessage)
+        }
+        this.isLoading = true
+      })
     console.log("fin")
   }
 

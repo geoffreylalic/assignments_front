@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
 import { HTTP } from '../utils/http-common'
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,77 +13,26 @@ export class AssignmentsService {
     'terminé'
   ]
   assignments: Assignment[] = []
+  uri: String = '  http://localhost:8010/api/assignments'
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  getAssignments(): Observable<any> {
-    return from(
-      new Promise((resolve, reject) => {
-        HTTP.get("/assignments/",)
-          .then((res) => {
-            this.assignments = res.data
-            resolve(this.assignments)
-          })
-          .catch((e) => {
-            // console.error(e)
-            reject(e)
-          })
-      })
-    )
+  getAssignments(): Observable<Assignment[]> {
+    return this.http.get<Assignment[]>(`${this.uri}`)
   }
 
-  addAssignments(assignment: Assignment): Observable<string> {
-    new Promise((resolve, reject) => {
-      HTTP.post("/assignments/", {
-        nom: assignment.nom,
-        professeur: assignment.professeur,
-        dateDeRendu: assignment.dateDeRendu,
-        statut: assignment.statut,
-        description: assignment.description,
-      })
-        .then((res) => {
-          console.log(res)
-          resolve(res)
-        })
-        .catch((e) => {
-          console.error(e)
-          reject(e)
-        })
-    })
-    return of('ajout réussi')
+  addAssignments(assignment: Assignment): Observable<any> {
+    return this.http.post<any>(`${this.uri}/`, assignment, )
   }
 
-  updateAssignment(assignment: Assignment): Observable<string> {
-    return of("l'assignment a été supprimé")
+  updateAssignment(assignment: Assignment): Observable<any> {
+    return this.http.patch(`${this.uri}/${assignment._id}`, assignment)
   }
 
-  deleteAssignment(assignment: Assignment): Observable<string> {
-    //todo: change with firebase 
-    let index = this.assignments.indexOf(assignment)
-    this.assignments.splice(index, 1)
-    return of('Assignment supprimer')
+  deleteAssignment(assignment: Assignment): Observable<any> {
+    return this.http.delete(`${this.uri}/${assignment._id}`)
   }
 
-  getAssignment(id: String): Observable<any> {
-    let assignment = new Assignment();
-    return from(
-      new Promise((resolve, reject) => {
-        HTTP.get(`/assignment/${id}`,)
-          .then((res) => {
-            assignment._id = res.data._id
-            assignment.nom = res.data.nom
-            assignment.professeur = res.data.professeur
-            assignment.statut = res.data.statut
-            assignment.description = res.data.description
-            resolve(assignment)
-          })
-          .catch((e) => {
-            console.error(e)
-            reject(e)
-          })
-      })
-    )
+  getAssignment(id: String): Observable<Assignment> {
+    return this.http.get<Assignment>(`${this.uri}/${id}`)
   }
-
-
 }

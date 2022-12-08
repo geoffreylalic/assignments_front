@@ -25,20 +25,16 @@ export class AddAssignmentComponent implements OnInit {
   onSubmit() {
     console.log("onSubmit : " + this.nom +
       " date de rendu : " + this.dateDeRendu);
-
     // On ajoute un nouvel assignment
     let nouvelAssignment = new Assignment();
     nouvelAssignment.nom = this.nom;
     nouvelAssignment.dateDeRendu = this.dateDeRendu;
     nouvelAssignment.statut = this.statut;
     nouvelAssignment.professeur = this.professeur;
-    nouvelAssignment.description = this.description
-    this.assignmentService.addAssignments(nouvelAssignment)
-
-    // le tableau est chez le papa comment faire ?
-    //this.assignments.push(nouvelAssignment);
-
-    this.nouvelAssignment.emit(nouvelAssignment);
+    nouvelAssignment.description = this.description;
+    this.assignmentService.addAssignments(nouvelAssignment).subscribe(data => {
+      console.log("data in ", data)
+    })
   }
 
 }

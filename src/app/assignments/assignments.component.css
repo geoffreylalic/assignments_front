@@ -25,5 +25,10 @@ table, tr, td {
     margin: 0 3% 0 3%;
   }
   
-  .card-container{
+  .router-link{
+    text-decoration: none;
   }
+
+a {
+  text-decoration: none;
+}

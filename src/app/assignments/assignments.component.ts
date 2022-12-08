@@ -10,7 +10,6 @@ import { Assignment } from './assignment.model';
   styleUrls: ['./assignments.component.css']
 })
 export class AssignmentsComponent implements OnInit {
-  titre = "Devoirs";
   assignmentSelectionne!: Assignment | undefined;
 
   formVisible = false;
@@ -48,8 +47,9 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onNouvelAssignment(nouvelAssignment: Assignment) {
-    this.assignmentsService.addAssignments(nouvelAssignment).subscribe(message => {
-      this.formVisible = false;
-    })
+    // this.assignmentsService.addAssignment(nouvelAssignment).subscribe(message => {
+    //   this.formVisible = false;
+    // })
   }
+  
 }

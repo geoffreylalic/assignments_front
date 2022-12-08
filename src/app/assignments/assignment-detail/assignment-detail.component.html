@@ -1,4 +1,23 @@
-<mat-card class="bottom" *ngIf="!isLoading; else loadingBlock">
+<mat-card class="bottom" *ngIf="errorMessage !== '' else nonErrorBlock">
+ {{errorMessage}}
+</mat-card>
+
+<ng-template #nonErrorBlock>
+  <mat-card class="bottom" *ngIf="!isLoading; else loadingBlock">
+    <mat-card-title>
+      {{assignment.nom}}
+    </mat-card-title>
+    <mat-card-content>
+      {{assignment.description}}
+      {{assignment.statut}}
+    </mat-card-content>
+    <mat-card-footer>
+      {{assignment.professeur}}
+    </mat-card-footer>
+  </mat-card>
+</ng-template>
+
+<!-- <mat-card class="bottom" *ngIf="!isLoading; else loadingBlock">
   <mat-card-title>
     {{assignment.nom}}
   </mat-card-title>
@@ -8,7 +27,7 @@
   <mat-card-footer>
     {{assignment.professeur}}
   </mat-card-footer>
-</mat-card>
+</mat-card> -->
 
 <ng-template #loadingBlock>
   <mat-spinner></mat-spinner>
