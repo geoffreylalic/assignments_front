@@ -21,7 +21,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AssignmentsComponent } from './assignments/assignments.component';
+import { AssignmentsComponent, DialogEntryComponent } from './assignments/assignments.component';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -34,20 +34,24 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 const routes: Routes = [
   {
     path: '',
-    component: AssignmentsComponent
+    component: AssignmentsComponent,
+    children:[ {
+        path: 'assignment/:id',
+        // component: AssignmentDetailComponent
+        component: DialogEntryComponent
+      },
+    ]
   },
   {
     path: 'add',
     component: AddAssignmentComponent
-  }, {
-    path: 'assignment/:id',
-    component: AssignmentDetailComponent
   },
   {
     path: 'assignment/:id/edit',
     component: EditAssignmentComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  { path: '**', redirectTo: '' }
 ]
 @NgModule({
   declarations: [
@@ -69,7 +73,7 @@ const routes: Routes = [
     MatDialogModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatToolbarModule, 
+    MatToolbarModule,
     HttpClientModule,
     DragDropModule,
   ],

@@ -1,9 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject, Injectable } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AssignmentsService } from '../shared/assignements.service'
 import { Assignment } from './assignment.model';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 
+
+export interface DialogData {
+  assignment: Assignment;
+}
+@Injectable()
+export class DataService {
+  assignment: Assignment
+}
+
+@Component({
+  template: ''
+})
+export class DialogEntryComponent {
+  constructor(public dialog: MatDialog, private router: Router,
+    public route: ActivatedRoute) {
+    this.openDialog();
+  }
+  openDialog(): void {
+    console.log("clicked open dialog")
+    const dialogRef = this.dialog.open(AssignmentDetailComponent, {
+      data: this.route
+    },
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
+  }
+}
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
@@ -11,6 +41,7 @@ import { Assignment } from './assignment.model';
 })
 export class AssignmentsComponent implements OnInit {
   assignmentSelectionne!: Assignment | undefined;
+  loading: boolean = false;
 
   formVisible = false;
 
@@ -19,27 +50,20 @@ export class AssignmentsComponent implements OnInit {
     assignmentsPasCommence: <Assignment[]>[],
     assignmentsTermine: <Assignment[]>[]
   }
-  assignmentsEnCours: Assignment[] = []
-  assignmentsPasCommence: Assignment[] = []
-  assignmentsTermine: Assignment[] = []
 
   constructor(private assignmentsService: AssignmentsService,
-    private router: Router) { }
-
+    private router: Router, public dialog: MatDialog) {
+  }
   ngOnInit(): void {
     console.log("appelé à l'initialisation du composant");
-    this.assignmentsService.getAssignments().subscribe((assignments => {
-      assignments.map(assignment => {
-        if (assignment.statut === 'pas commencé') {
-          this.assignmentsPasCommence.push(assignment)
-        } else if (assignment.statut === 'en cours') {
-          this.assignmentsEnCours.push(assignment)
-        }
-        else if (assignment.statut === 'terminé') {
-          this.assignmentsTermine.push(assignment)
-        }
-      })
+    this.getAssignments()
+  }
 
+  getAssignments() {
+    this.assginments.assignmentsPasCommence = []
+    this.assginments.assignmentsEnCours = []
+    this.assginments.assignmentsTermine = []
+    this.assignmentsService.getAssignments().subscribe((assignments => {
       assignments.map(assignment => {
         if (assignment.statut === 'pas commencé') {
           this.assginments.assignmentsPasCommence.push(assignment)
@@ -53,11 +77,6 @@ export class AssignmentsComponent implements OnInit {
     }))
   }
 
-  // assignmentClique(assignment: Assignment) {
-  //   this.assignmentSelectionne = assignment;
-  //   this.router.navigate[`assignment/${assignment._id}`]
-  // }
-
   onAddAssignmentBtnClick() {
     this.formVisible = true;
   }
@@ -68,9 +87,15 @@ export class AssignmentsComponent implements OnInit {
     // })
   }
 
-  handleDelete(assignment){
-    this.assignmentsService.deleteAssignment(assignment).subscribe(data => console.log("delted data", data))
+  handleDelete(assignment) {
+    this.assignmentsService.deleteAssignment(assignment).subscribe(data => {
+      this.loading = true
+      console.log("delted data", data)
+      this.getAssignments()
+      this.loading = false
+    })
     console.log("delete clicked", assignment)
+
   }
 
 }

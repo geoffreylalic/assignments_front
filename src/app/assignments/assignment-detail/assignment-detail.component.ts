@@ -1,8 +1,9 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from '../../shared/assignements.service';
 import { Assignment } from '../assignment.model';
+import { DataService } from '../assignments.component';
 
 @Component({
   selector: 'app-assignment-detail',
@@ -10,21 +11,27 @@ import { Assignment } from '../assignment.model';
   styleUrls: ['./assignment-detail.component.css']
 })
 export class AssignmentDetailComponent implements OnInit {
-  id: String = ''
+  id: any = ''
   assignment: Assignment = new Assignment()
   isLoading: Boolean = true
   errorMessage: String = ''
+  activeRoute: any
 
   constructor(private assignmentsService: AssignmentsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog) { }
+    @Inject(MAT_DIALOG_DATA) dialogData: { route: ActivatedRoute }
+  ) {
+    this.activeRoute = dialogData
+  }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id']
-    console.log("id ", this.id)
+    // this.id = this.route.snapshot
+    
+    console.log("id active route", this.activeRoute.snapshot.params['id'])
+    this.id = this.activeRoute.snapshot.params['id']
+    
     this.getAssignment()
   }
+
 
   getAssignment() {
     this.isLoading = true
@@ -45,18 +52,18 @@ export class AssignmentDetailComponent implements OnInit {
     console.log("fin")
   }
 
-  formatDate(date): any{
-    if (date === null){
+  formatDate(date): any {
+    if (date === null) {
       return 'pas de date'
     }
     let d = new Date(date)
-    return `${d.getDate().toString().padStart(2,'0')}/${d.getMonth().toString().padStart(2,'0')}/${d.getFullYear()}`;
+    return `${d.getDate().toString().padStart(2, '0')}/${d.getMonth().toString().padStart(2, '0')}/${d.getFullYear()}`;
 
   }
 
-  onEditAssignment(assignment: Assignment) {
-    this.router.navigateByUrl(`assignment/${assignment._id}/edit?id=oui`,)
-  }
+  // onEditAssignment(assignment: Assignment) {
+  //   this.router.navigateByUrl(`assignment/${assignment._id}/edit?id=oui`,)
+  // }
 
   onAssignmentRendu() {
     // this.router.navigate(['/home']);
