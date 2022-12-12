@@ -44,3 +44,9 @@ a {
 .router-link{
   color: black;
 }
+
+.date{
+  color: red;
+  font-weight: bold;
+  padding-left: 3px;
+}

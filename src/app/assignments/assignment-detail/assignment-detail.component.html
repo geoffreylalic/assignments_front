@@ -13,15 +13,16 @@
       </button>
     </mat-card-title>
     <mat-card-content>
+      Description:
       <div>
         {{assignment.description}}
       </div>
 
     </mat-card-content>
-    <mat-card-footer>
-      <mat-chip-list>
+    <mat-card-footer class="card-footer">
+      <mat-chip-list >
         <mat-chip [ngClass]="
-        assignment.statut === 'pas commencé' ? 'pas-commence':
+        assignment.statut === 'à faire' ? 'pas-commence':
         assignment.statut === 'en cours' ? 'en-cours' :
         assignment.statut === 'terminé' ? 'termine' : 'termine' " selected>
           {{assignment.statut}}

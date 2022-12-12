@@ -13,7 +13,7 @@ export class AddAssignmentComponent implements OnInit {
   // Pour le formulaire
   nom = "";
   professeur = "";
-  statuts = ['pas commencé', 'en cours', 'terminé']
+  statuts = ['à faire', 'en cours', 'terminé']
   statut = ''
   description = '';
   dateDeRendu!: Date;

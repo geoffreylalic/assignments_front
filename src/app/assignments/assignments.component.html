@@ -10,20 +10,15 @@
                 {{a.nom}}
               </div>
             </a>
-            <div>
-              <button mat-mini-fab color="">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-mini-fab color="warn" (click)="handleDelete(a)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
+            <button mat-mini-fab color="warn" (click)="handleDelete(a)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </mat-card-title>
           <a [ngClass]="'router-link'" [routerLink]="['/assignment',a._id]">
-            <h3 mat-subheader>Pour le: {{a.dateDeRendu | date}}</h3>
+            <h3 mat-subheader>Pour le <span class="date"> {{a.dateDeRendu | date}}</span></h3>
             <mat-chip-list>
               <mat-chip [ngClass]="
-                a.statut === 'pas commencé' ? 'pas-commence':
+                a.statut === 'à faire' ? 'pas-commence':
                 a.statut === 'en cours' ? 'en-cours' :
                 a.statut === 'terminé' ? 'termine' : 'termine' " selected>
                 {{a.statut}}
@@ -34,6 +29,6 @@
       </mat-list>
     </div>
   </mat-list>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
 </main>

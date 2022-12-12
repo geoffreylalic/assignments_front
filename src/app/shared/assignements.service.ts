@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AssignmentsService {
   statuts: string[] = [
-    'pas commencé',
+    'à faire',
     'en cours',
     'terminé'
   ]

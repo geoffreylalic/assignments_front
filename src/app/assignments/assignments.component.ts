@@ -26,6 +26,7 @@ export class DialogEntryComponent {
   openDialog(): void {
     console.log("clicked open dialog")
     const dialogRef = this.dialog.open(AssignmentDetailComponent, {
+      width: '50%',
       data: this.route
     },
     );
@@ -46,8 +47,8 @@ export class AssignmentsComponent implements OnInit {
   formVisible = false;
 
   assginments = {
+    assignmentsAFaire: <Assignment[]>[],
     assignmentsEnCours: <Assignment[]>[],
-    assignmentsPasCommence: <Assignment[]>[],
     assignmentsTermine: <Assignment[]>[]
   }
 
@@ -60,13 +61,13 @@ export class AssignmentsComponent implements OnInit {
   }
 
   getAssignments() {
-    this.assginments.assignmentsPasCommence = []
+    this.assginments.assignmentsAFaire = []
     this.assginments.assignmentsEnCours = []
     this.assginments.assignmentsTermine = []
     this.assignmentsService.getAssignments().subscribe((assignments => {
       assignments.map(assignment => {
-        if (assignment.statut === 'pas commencé') {
-          this.assginments.assignmentsPasCommence.push(assignment)
+        if (assignment.statut === 'à faire') {
+          this.assginments.assignmentsAFaire.push(assignment)
         } else if (assignment.statut === 'en cours') {
           this.assginments.assignmentsEnCours.push(assignment)
         }
