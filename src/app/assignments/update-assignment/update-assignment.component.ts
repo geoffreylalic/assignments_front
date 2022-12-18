@@ -16,40 +16,39 @@ export class UpdateAssignmentComponent implements OnInit {
   statuts = ['à faire', 'en cours', 'terminé']
 
 
-  constructor(private assignmentsService: AssignmentsService, private route: ActivatedRoute, private router:Router ) { }
+  constructor(private assignmentsService: AssignmentsService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.id =  this.route.snapshot.params['id']
+    this.id = this.route.snapshot.params['id']
     this.getAssignment()
   }
 
   getAssignment() {
     this.isLoading = true
     this.assignmentsService.getAssignment(this.id).subscribe((assignment) => {
-      console.log("ici ", assignment)
       this.assignment = assignment
-      this.isLoading = false
     },
       (error) => {
-        console.log("error --- ", error)
         if (error) {
-          this.errorMessage = 'Network error'
-          console.log("message error", this.errorMessage)
+          this.assignmentsService.msg.next(error)
         }
-        this.isLoading = true
       })
-    console.log("fin")
+    this.isLoading = false
   }
 
-  onConfirm(){
+  onConfirm() {
     this.isLoading = true
-    console.log("assiginement to update", this.assignment)
     this.assignmentsService.updateAssignment(this.assignment).subscribe((msg) => {
-      console.log("subscribe msg", msg)
-    })
+      this.assignmentsService.msg.next(msg)
+    },
+      (error) => {
+        if (error) {
+          this.assignmentsService.msg.next(error)
+        }
+      })
     this.isLoading = false
-    
-    this.router.navigate([''],{relativeTo:this.route})
+
+    this.router.navigate([''], { relativeTo: this.route })
   }
 
 }

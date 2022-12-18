@@ -78,23 +78,17 @@ export class AssignmentsComponent implements OnInit {
     }))
   }
 
-  onAddAssignmentBtnClick() {
-    this.formVisible = true;
-  }
-
-  onNouvelAssignment(nouvelAssignment: Assignment) {
-    // this.assignmentsService.addAssignment(nouvelAssignment).subscribe(message => {
-    //   this.formVisible = false;
-    // })
-  }
-
   handleDelete(assignment) {
-    this.assignmentsService.deleteAssignment(assignment).subscribe(data => {
+    this.assignmentsService.deleteAssignment(assignment).subscribe(msg => {
       this.loading = true
-      console.log("delted data", data)
+      console.log("delted data", msg)
       this.getAssignments()
       this.loading = false
-    })
+      this.assignmentsService.msg.next(msg)
+    },
+      (error) => {
+        this.assignmentsService.msg.next(error)
+      })
     console.log("delete clicked", assignment)
 
   }

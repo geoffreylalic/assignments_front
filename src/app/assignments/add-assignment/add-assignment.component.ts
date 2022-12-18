@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignements.service';
 import { Assignment } from '../assignment.model';
 
@@ -17,7 +18,7 @@ export class AddAssignmentComponent implements OnInit {
   statut = ''
   description = '';
   dateDeRendu!: Date;
-  constructor(private assignmentService: AssignmentsService) { }
+  constructor(private assignmentService: AssignmentsService, private _assignmentsService: AssignmentsService, private router: Router, private route: ActivatedRoute ) { }
 
   ngOnInit(): void {
   }
@@ -32,9 +33,11 @@ export class AddAssignmentComponent implements OnInit {
     nouvelAssignment.statut = this.statut;
     nouvelAssignment.professeur = this.professeur;
     nouvelAssignment.description = this.description;
-    this.assignmentService.addAssignments(nouvelAssignment).subscribe(data => {
-      console.log("data in ", data)
+    this.assignmentService.addAssignments(nouvelAssignment).subscribe(msg => {
+      console.log("data in ", msg)
+      this._assignmentsService.msg.next(msg)
     })
+    this.router.navigate([''], {relativeTo: this.route})
   }
 
 }

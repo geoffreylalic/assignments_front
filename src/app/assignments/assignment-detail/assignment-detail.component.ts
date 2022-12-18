@@ -47,8 +47,7 @@ export class AssignmentDetailComponent implements OnInit {
       (error) => {
         console.log("error --- ", error)
         if (error) {
-          this.errorMessage = 'Network error'
-          console.log("message error", this.errorMessage)
+          this.assignmentsService.msg.next(error)
         }
         this.isLoading = true
       })
@@ -64,7 +63,7 @@ export class AssignmentDetailComponent implements OnInit {
 
   }
 
-  handleDelete(id) {
+  handleUpdate(id) {
     console.log('data', id)
     this.router.navigate(['/assignment', id, 'edit'], { relativeTo: this.activeRoute });
     this.dialogRef.close()
