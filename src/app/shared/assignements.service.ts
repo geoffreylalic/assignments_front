@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, Subject } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
 import { HTTP } from '../utils/http-common'
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,9 @@ export class AssignmentsService {
   ]
   assignments: Assignment[] = []
   uri: String = '  http://localhost:8010/api/assignments'
-  constructor(private http: HttpClient) { }
+  msg = new Subject<any>()
+
+  constructor(private http: HttpClient, ) { }
 
   getAssignments(): Observable<Assignment[]> {
     return this.http.get<Assignment[]>(`${this.uri}`)
@@ -25,7 +28,7 @@ export class AssignmentsService {
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {
-    return this.http.patch(`${this.uri}/${assignment._id}`, assignment)
+    return this.http.put(`${this.uri}/${assignment._id}`, assignment)
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {

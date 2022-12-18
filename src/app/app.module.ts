@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AppComponent } from './app.component';
@@ -26,10 +27,10 @@ import { AssignmentDetailComponent } from './assignments/assignment-detail/assig
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 import { RouterModule, Routes } from '@angular/router';
 import { compileClassMetadata } from '@angular/compiler';
-import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { UpdateAssignmentComponent } from './assignments/update-assignment/update-assignment.component';
 
 const routes: Routes = [
   {
@@ -48,8 +49,8 @@ const routes: Routes = [
   },
   {
     path: 'assignment/:id/edit',
-    component: EditAssignmentComponent,
-    canActivate: [AuthGuard]
+    component: UpdateAssignmentComponent,
+    // canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '' }
 ]
@@ -59,7 +60,7 @@ const routes: Routes = [
     AssignmentsComponent,
     AssignmentDetailComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent,
+    UpdateAssignmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +77,7 @@ const routes: Routes = [
     MatToolbarModule,
     HttpClientModule,
     DragDropModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

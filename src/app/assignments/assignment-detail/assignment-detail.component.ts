@@ -1,5 +1,6 @@
+import { CdkPortal } from '@angular/cdk/portal';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from '../../shared/assignements.service';
 import { Assignment } from '../assignment.model';
@@ -18,6 +19,8 @@ export class AssignmentDetailComponent implements OnInit {
   activeRoute: any
 
   constructor(private assignmentsService: AssignmentsService,
+    private router: Router,
+    private dialogRef: MatDialogRef<AssignmentDetailComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData: { route: ActivatedRoute }
   ) {
     this.activeRoute = dialogData
@@ -25,10 +28,10 @@ export class AssignmentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     // this.id = this.route.snapshot
-    
+
     console.log("id active route", this.activeRoute.snapshot.params['id'])
     this.id = this.activeRoute.snapshot.params['id']
-    
+
     this.getAssignment()
   }
 
@@ -61,15 +64,9 @@ export class AssignmentDetailComponent implements OnInit {
 
   }
 
-  // onEditAssignment(assignment: Assignment) {
-  //   this.router.navigateByUrl(`assignment/${assignment._id}/edit?id=oui`,)
-  // }
-
-  onAssignmentRendu() {
-    // this.router.navigate(['/home']);
+  handleDelete(id) {
+    console.log('data', id)
+    this.router.navigate(['/assignment', id, 'edit'], { relativeTo: this.activeRoute });
+    this.dialogRef.close()
   }
-
-  onDeleteAssignment() {
-  }
-
 }

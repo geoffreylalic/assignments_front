@@ -8,7 +8,9 @@
       <div>
         {{assignment.nom}} - {{assignment.professeur}}
       </div>
-      <button mat-mini-fab aria-label="Example icon button with a filter list icon">
+
+      <!-- assignment/:id/edit -->
+      <button mat-mini-fab aria-label="Example icon button with a filter list icon" (click)="handleDelete(assignment._id)">
         <mat-icon>edit</mat-icon>
       </button>
     </mat-card-title>
@@ -20,7 +22,7 @@
 
     </mat-card-content>
     <mat-card-footer class="card-footer">
-      <mat-chip-list >
+      <mat-chip-list>
         <mat-chip [ngClass]="
         assignment.statut === 'à faire' ? 'pas-commence':
         assignment.statut === 'en cours' ? 'en-cours' :

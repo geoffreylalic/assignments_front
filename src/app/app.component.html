@@ -4,6 +4,9 @@
         <a routerLink="">{{title}} </a>
         <a routerLink="add">Ajouter assignments</a>
     </nav>
+    <button mat-stroked-button (click)="openSnackBar()" aria-label="Show an example snack-bar">
+        Pool party!
+      </button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
