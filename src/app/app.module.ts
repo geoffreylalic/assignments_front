@@ -31,6 +31,7 @@ import { AuthGuard } from './shared/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UpdateAssignmentComponent } from './assignments/update-assignment/update-assignment.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const routes: Routes = [
   {
@@ -78,6 +79,7 @@ const routes: Routes = [
     HttpClientModule,
     DragDropModule,
     MatSnackBarModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

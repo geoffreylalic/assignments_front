@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignements.service';
+import { ProfessorsService } from 'src/app/shared/professors.service';
 import { Assignment } from '../assignment.model';
 
 @Component({
@@ -13,14 +14,16 @@ export class UpdateAssignmentComponent implements OnInit {
   assignment: Assignment = new Assignment()
   errorMessage: string = null
   id: string = null
-  statuts = ['à faire', 'en cours', 'terminé']
+  statuts = ['à faire', 'en cours', 'finit', 'rendu']
+  professors = []
 
 
-  constructor(private assignmentsService: AssignmentsService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private assignmentsService: AssignmentsService, private route: ActivatedRoute, private router: Router, private professorsService: ProfessorsService) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id']
     this.getAssignment()
+    this.professorsService.getProfessors().subscribe((res) => this.professors = res)
   }
 
   getAssignment() {

@@ -25,8 +25,12 @@ a {
   background-color: orange !important;
 }
 
-.termine {
+.finit {
   background-color: green !important;
+}
+
+.rendu{
+  background-color: purple !important;
 }
 
 .mat-list-base {
@@ -49,4 +53,15 @@ a {
   color: red;
   font-weight: bold;
   padding-left: 3px;
+}
+
+.search{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1%;
+  /* width: max-content; */
+}
+
+.searchField{
+  margin: 5px;
 }

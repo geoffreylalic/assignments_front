@@ -4,9 +4,17 @@
         <mat-label>Nom du devoir à ajouter</mat-label>
         <input matInput [(ngModel)]="assignment.nom" name="nom">
     </mat-form-field>
+    <mat-form-field class="field" appearance="fill">
+        <mat-label>Professeur</mat-label>
+        <mat-select [(value)]="assignment.professeur">
+          <mat-option *ngFor="let prof of professors" [value]="prof">
+            {{prof}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     <mat-form-field class="field">
-        <mat-label>Nom du professeur</mat-label>
-        <input matInput [(ngModel)]="assignment.professeur" name="professeur">
+        <mat-label>Matière</mat-label>
+        <input matInput [(ngModel)]="assignment.subject" name="subject">
     </mat-form-field>
     <mat-form-field class="field" appearance="fill">
         <mat-label>Date de rendu</mat-label>

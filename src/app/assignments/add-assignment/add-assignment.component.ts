@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignements.service';
+import { ProfessorsService } from 'src/app/shared/professors.service';
 import { Assignment } from '../assignment.model';
 
 @Component({
@@ -12,15 +13,18 @@ export class AddAssignmentComponent implements OnInit {
   @Output() nouvelAssignment = new EventEmitter<Assignment>();
 
   // Pour le formulaire
-  nom = "";
-  professeur = "";
-  statuts = ['à faire', 'en cours', 'terminé']
-  statut = ''
-  description = '';
+  nom = null;
+  professeur = null;
+  statuts = ['à faire', 'en cours', 'finit', 'rendu']
+  statut = null;
+  description = null;
   dateDeRendu!: Date;
-  constructor(private assignmentService: AssignmentsService, private _assignmentsService: AssignmentsService, private router: Router, private route: ActivatedRoute ) { }
+  subject = null;
+  professors = []
+  constructor(private assignmentService: AssignmentsService, private _assignmentsService: AssignmentsService, private router: Router, private route: ActivatedRoute, private professorsService: ProfessorsService ) { }
 
   ngOnInit(): void {
+    this.professorsService.getProfessors().subscribe((res) => this.professors=res)
   }
 
   onSubmit() {
@@ -33,8 +37,8 @@ export class AddAssignmentComponent implements OnInit {
     nouvelAssignment.statut = this.statut;
     nouvelAssignment.professeur = this.professeur;
     nouvelAssignment.description = this.description;
+    nouvelAssignment.subject = this.subject;
     this.assignmentService.addAssignments(nouvelAssignment).subscribe(msg => {
-      console.log("data in ", msg)
       this._assignmentsService.msg.next(msg)
     })
     this.router.navigate([''], {relativeTo: this.route})

@@ -25,3 +25,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Commentaire
+
+Pour ce qui est des photos des professeurs, je n'ai pas réussi à les mettre en base de données, je les ai codé en dure dans le detail des assignments et gardées dans les assets du projet front.

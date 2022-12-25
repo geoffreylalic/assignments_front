@@ -1,3 +1,35 @@
+<div class="search">
+  <div>
+    <mat-form-field class="searchField">
+      <mat-label>Nom assignment</mat-label>
+      <input matInput type="text" [(ngModel)]="search.name">
+      <button *ngIf="search.name" matSuffix mat-icon-button aria-label="Clear" (click)="search.name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="searchField">
+      <mat-label>Professeur</mat-label>
+      <input matInput type="text" [(ngModel)]="search.professor">
+      <button *ngIf="search.professor" matSuffix mat-icon-button aria-label="Clear" (click)="search.professor=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-flat-button color="{{search.aFaire ? 'primary': 'basic'}}"
+      (click)="search.aFaire ? search.aFaire = false : search.aFaire =true">A faire</button>
+    <button mat-flat-button color="{{search.enCours ? 'primary': 'basic'}}"
+      (click)="search.enCours ? search.enCours = false : search.enCours =true">En cours</button>
+    <button mat-flat-button color="{{search.finit ? 'primary': 'basic'}}"
+      (click)="search.finit ? search.finit = false : search.finit =true">Finit</button>
+    <button mat-flat-button color="{{search.rendu ? 'primary': 'basic'}}"
+      (click)="search.rendu ? search.rendu = false : search.rendu =true">Rendu</button>
+    <button mat-flat-button (click)="handlesearch()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+  </mat-paginator>
+</div>
+
 <main *ngIf="!formVisible" [ngClass]="'container'">
   <mat-list *ngFor="let assignment of assginments | keyvalue ">
     <div [ngClass]="'assignments-container'">
@@ -20,7 +52,8 @@
               <mat-chip [ngClass]="
                 a.statut === 'à faire' ? 'pas-commence':
                 a.statut === 'en cours' ? 'en-cours' :
-                a.statut === 'terminé' ? 'termine' : 'termine' " selected>
+                a.statut === 'finit' ? 'finit' :
+                a.statut === 'rendu' ? 'rendu' : 'rendu' " selected>
                 {{a.statut}}
               </mat-chip>
             </mat-chip-list>
@@ -28,7 +61,9 @@
         </mat-card>
       </mat-list>
     </div>
+
   </mat-list>
+
   <router-outlet></router-outlet>
 
 </main>

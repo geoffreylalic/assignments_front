@@ -26,7 +26,7 @@ export class DialogEntryComponent {
   openDialog(): void {
     console.log("clicked open dialog")
     const dialogRef = this.dialog.open(AssignmentDetailComponent, {
-      width: '50%',
+      width: '450px',
       data: this.route
     },
     );
@@ -41,15 +41,24 @@ export class DialogEntryComponent {
   styleUrls: ['./assignments.component.css']
 })
 export class AssignmentsComponent implements OnInit {
-  assignmentSelectionne!: Assignment | undefined;
   loading: boolean = false;
-
+  searchValue:String = null;
   formVisible = false;
+  search= {
+    name: null,
+    professor:null,
+    aFaire : false,
+    enCours: false,
+    finit: false,
+    rendu:false,
+  }
 
   assginments = {
     assignmentsAFaire: <Assignment[]>[],
     assignmentsEnCours: <Assignment[]>[],
-    assignmentsTermine: <Assignment[]>[]
+    assignmentsRendu: <Assignment[]>[],
+    assignmentsTermine: <Assignment[]>[],
+    
   }
 
   constructor(private assignmentsService: AssignmentsService,
@@ -64,6 +73,7 @@ export class AssignmentsComponent implements OnInit {
     this.assginments.assignmentsAFaire = []
     this.assginments.assignmentsEnCours = []
     this.assginments.assignmentsTermine = []
+    this.assginments.assignmentsRendu = []
     this.assignmentsService.getAssignments().subscribe((assignments => {
       assignments.map(assignment => {
         if (assignment.statut === 'à faire') {
@@ -71,8 +81,11 @@ export class AssignmentsComponent implements OnInit {
         } else if (assignment.statut === 'en cours') {
           this.assginments.assignmentsEnCours.push(assignment)
         }
-        else if (assignment.statut === 'terminé') {
+        else if (assignment.statut === 'finit') {
           this.assginments.assignmentsTermine.push(assignment)
+        }
+        else if (assignment.statut === 'rendu') {
+          this.assginments.assignmentsRendu.push(assignment)
         }
       })
     }))
@@ -90,7 +103,10 @@ export class AssignmentsComponent implements OnInit {
         this.assignmentsService.msg.next(error)
       })
     console.log("delete clicked", assignment)
+  }
 
+  handlesearch(){
+    console.log("clicked search ---")
   }
 
 }

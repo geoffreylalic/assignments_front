@@ -17,12 +17,15 @@
     background-color: orange  !important;
 }
 
-.termine{
+.finit{
     background-color: green  !important;
 }
 
-.card-footer{
+.card-title{
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+}
+
+.card-title-element{
+    padding-right: 10px;
 }

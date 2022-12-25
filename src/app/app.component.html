@@ -1,9 +1,14 @@
-<mat-toolbar>
-    <span>Composant principal de gestion de devoirs</span>
-    <nav>
-        <a routerLink="">{{title}} </a>
-        <a routerLink="add">Ajouter assignments</a>
-    </nav>
+<mat-toolbar class="header">
+    <a routerLink="">{{title}} </a>
+    <div>
+        <button mat-button color="primary" (click)="handleAddAssignments()">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+        <button mat-button color="primary" (click)="handleAddAssignments()">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+    </div>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>

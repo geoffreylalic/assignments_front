@@ -4,36 +4,48 @@
 
 <ng-template class="container" #nonLoadingBlock>
   <mat-card class="card" *ngIf="!isLoading; else loadingBlock">
-    <mat-card-title class="mat-title">
-      <div>
-        {{assignment.nom}} - {{assignment.professeur}}
-      </div>
-
-      <!-- assignment/:id/edit -->
-      <button mat-mini-fab aria-label="Example icon button with a filter list icon" (click)="handleUpdate(assignment._id)">
-        <mat-icon>edit</mat-icon>
-      </button>
-    </mat-card-title>
+    <mat-card-title-group>
+      <mat-card-title class="card-title">
+        <div class="card-title-element">
+          {{assignment.nom}} 
+        </div>
+          
+          <mat-chip-list>
+            <mat-chip [ngClass]="
+            assignment.statut === 'à faire' ? 'pas-commence':
+            assignment.statut === 'en cours' ? 'en-cours' :
+            assignment.statut === 'finit' ? 'finit' :
+            assignment.statut === 'rendu' ? 'rendu': 'rendu'
+            " selected>
+              {{assignment.statut}}
+            </mat-chip>
+          </mat-chip-list>
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{assignment.professeur}} - {{assignment.subject}}
+      </mat-card-subtitle>
+      <img mat-card-sm-image src="../../../assets/professors/{{assignment.professeur.toLowerCase()}}.jpeg" alt="{{assignment.professeur}}">
+      
+    </mat-card-title-group>
     <mat-card-content>
+      <div>
+        Pour le <span class="date-rendu">{{assignment.dateDeRendu}}</span>
+      </div>
       Description:
       <div>
         {{assignment.description}}
       </div>
-
+     
     </mat-card-content>
-    <mat-card-footer class="card-footer">
-      <mat-chip-list>
-        <mat-chip [ngClass]="
-        assignment.statut === 'à faire' ? 'pas-commence':
-        assignment.statut === 'en cours' ? 'en-cours' :
-        assignment.statut === 'terminé' ? 'termine' : 'termine' " selected>
-          {{assignment.statut}}
-        </mat-chip>
-      </mat-chip-list>
-      <div>
-        Pour le <span class="date-rendu">{{assignment.dateDeRendu}}</span>
-      </div>
-    </mat-card-footer>
+    <mat-divider></mat-divider>
+    <mat-card-actions class="card-footer">
+      <button mat-button color="primary" (click)="handleUpdate(assignment._id)">
+        Edit
+      </button>
+      <button mat-button color="basic" (click)="handleCloseDialog()">
+        Close
+      </button>
+    </mat-card-actions>
   </mat-card>
   <!-- <router-outlet></router-outlet> -->
 </ng-template>

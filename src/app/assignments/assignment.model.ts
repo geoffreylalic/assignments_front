@@ -5,4 +5,6 @@ export class Assignment {
   dateDeRendu!: Date;
   statut!: string;
   description!: string;
+  subject!:string;
+  created_by!: string;
 }

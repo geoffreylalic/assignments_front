@@ -39,19 +39,16 @@ export class AssignmentDetailComponent implements OnInit {
   getAssignment() {
     this.isLoading = true
     this.assignmentsService.getAssignment(this.id).subscribe((assignment) => {
-      console.log("ici ", assignment)
       this.assignment = assignment
       this.assignment.dateDeRendu = this.formatDate(assignment.dateDeRendu)
       this.isLoading = false
     },
       (error) => {
-        console.log("error --- ", error)
         if (error) {
           this.assignmentsService.msg.next(error)
         }
         this.isLoading = true
       })
-    console.log("fin")
   }
 
   formatDate(date): any {
@@ -66,6 +63,10 @@ export class AssignmentDetailComponent implements OnInit {
   handleUpdate(id) {
     console.log('data', id)
     this.router.navigate(['/assignment', id, 'edit'], { relativeTo: this.activeRoute });
+    this.dialogRef.close()
+  }
+  
+  handleCloseDialog() {
     this.dialogRef.close()
   }
 }
