@@ -4,9 +4,19 @@
         <button mat-button color="primary" (click)="handleAddAssignments()">
             <mat-icon>add_circle</mat-icon>
         </button>
-        <button mat-button color="primary" (click)="handleAddAssignments()">
+        <button mat-button color="primary" [matMenuTriggerFor]="menu">
             <mat-icon>account_circle</mat-icon>
         </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>manage_accounts</mat-icon>
+                Modify profile
+            </button>
+            <button mat-menu-item>
+                <mat-icon>logout</mat-icon>
+                Sign out
+            </button>
+        </mat-menu>
     </div>
 
 </mat-toolbar>

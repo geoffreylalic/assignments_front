@@ -2,39 +2,41 @@
   <div>
     <mat-form-field class="searchField">
       <mat-label>Nom assignment</mat-label>
-      <input matInput type="text" [(ngModel)]="search.name">
-      <button *ngIf="search.name" matSuffix mat-icon-button aria-label="Clear" (click)="search.name=''">
+      <input matInput type="text" [(ngModel)]="filter.nom" (change)="getAssignments()">
+      <button *ngIf="filter.nom" matSuffix mat-icon-button aria-label="Clear" (click)="filter.nom=''">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
     <mat-form-field class="searchField">
       <mat-label>Professeur</mat-label>
-      <input matInput type="text" [(ngModel)]="search.professor">
-      <button *ngIf="search.professor" matSuffix mat-icon-button aria-label="Clear" (click)="search.professor=''">
+      <input matInput type="text" [(ngModel)]="filter.professeur" (change)="getAssignments()">
+      <button *ngIf="filter.professeur" matSuffix mat-icon-button aria-label="Clear" (click)="filter.professeur=''">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-flat-button color="{{search.aFaire ? 'primary': 'basic'}}"
-      (click)="search.aFaire ? search.aFaire = false : search.aFaire =true">A faire</button>
-    <button mat-flat-button color="{{search.enCours ? 'primary': 'basic'}}"
-      (click)="search.enCours ? search.enCours = false : search.enCours =true">En cours</button>
-    <button mat-flat-button color="{{search.finit ? 'primary': 'basic'}}"
-      (click)="search.finit ? search.finit = false : search.finit =true">Finit</button>
-    <button mat-flat-button color="{{search.rendu ? 'primary': 'basic'}}"
-      (click)="search.rendu ? search.rendu = false : search.rendu =true">Rendu</button>
+    <button mat-flat-button color="{{statuts.aFaire ? 'primary': 'basic'}}"
+      (click)="filteringStatuts('à faire');statuts.aFaire ? statuts.aFaire = false : statuts.aFaire = true">A
+      faire</button>
+    <button mat-flat-button color="{{statuts.enCours ? 'primary': 'basic'}}"
+      (click)="filteringStatuts('en cours');statuts.enCours ? statuts.enCours = false : statuts.enCours = true">En
+      cours</button>
+    <button mat-flat-button color="{{statuts.finit ? 'primary': 'basic'}}"
+      (click)="filteringStatuts('finit');statuts.finit ? statuts.finit = false : statuts.finit =true">Finit</button>
+    <button mat-flat-button color="{{statuts.rendu ? 'primary': 'basic'}}"
+      (click)="filteringStatuts('rendu');statuts.rendu ? statuts.rendu = false : statuts.rendu =true">Rendu</button>
     <button mat-flat-button (click)="handlesearch()">
       <mat-icon>search</mat-icon>
     </button>
   </div>
-  <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+  <mat-paginator [length]="total" [pageSize]="filter.pageSize" [pageSizeOptions]="pageSizeOptions"
+    aria-label="Select page" (page)="handlePageEvent($event)">
   </mat-paginator>
 </div>
 
 <main *ngIf="!formVisible" [ngClass]="'container'">
-  <mat-list *ngFor="let assignment of assginments | keyvalue ">
+  <mat-list *ngFor="let assignment of assignment | keyvalue ">
     <div [ngClass]="'assignments-container'">
       <mat-list *ngFor="let a of assignment.value" [ngClass]="'list-card'">
-
         <mat-card [ngClass]="'card-container'">
           <mat-card-title [ngClass]="'card-title'">
             <a routerLink="dialog" [ngClass]="'router-link'" [routerLink]="['assignment', a._id]">

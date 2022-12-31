@@ -5,7 +5,7 @@ import { AssignmentsService } from '../shared/assignements.service'
 import { Assignment } from './assignment.model';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
-
+import { PageEvent } from '@angular/material/paginator';
 
 export interface DialogData {
   assignment: Assignment;
@@ -24,7 +24,6 @@ export class DialogEntryComponent {
     this.openDialog();
   }
   openDialog(): void {
-    console.log("clicked open dialog")
     const dialogRef = this.dialog.open(AssignmentDetailComponent, {
       width: '450px',
       data: this.route
@@ -42,50 +41,54 @@ export class DialogEntryComponent {
 })
 export class AssignmentsComponent implements OnInit {
   loading: boolean = false;
-  searchValue:String = null;
   formVisible = false;
-  search= {
-    name: null,
-    professor:null,
-    aFaire : false,
+  filter = {
+    nom: null,
+    professeur: null,
+    page: 1,
+    pageSize: 10,
+    statuts: []
+  }
+  pageSizeOptions = [5, 10, 20]
+  total = 0
+  pageEvent: PageEvent;
+  statuts = {
+    aFaire: false,
     enCours: false,
     finit: false,
-    rendu:false,
+    rendu: false,
   }
-
-  assginments = {
+  assignment = {
     assignmentsAFaire: <Assignment[]>[],
     assignmentsEnCours: <Assignment[]>[],
-    assignmentsRendu: <Assignment[]>[],
     assignmentsTermine: <Assignment[]>[],
-    
+    zassignmentsRendu: <Assignment[]>[],
   }
 
-  constructor(private assignmentsService: AssignmentsService,
-    private router: Router, public dialog: MatDialog) {
+  constructor(private assignmentsService: AssignmentsService, public dialog: MatDialog) {
   }
   ngOnInit(): void {
-    console.log("appelé à l'initialisation du composant");
     this.getAssignments()
   }
 
   getAssignments() {
-    this.assginments.assignmentsAFaire = []
-    this.assginments.assignmentsEnCours = []
-    this.assginments.assignmentsTermine = []
-    this.assginments.assignmentsRendu = []
-    this.assignmentsService.getAssignments().subscribe((assignments => {
-      assignments.map(assignment => {
+    this.assignment.assignmentsAFaire = []
+    this.assignment.assignmentsEnCours = []
+    this.assignment.assignmentsTermine = []
+    this.assignment.zassignmentsRendu = []
+    this.assignmentsService.getAssignments(this.filter).subscribe((res => {
+      this.total = res.total
+      res.assignments.map(assignment => {
         if (assignment.statut === 'à faire') {
-          this.assginments.assignmentsAFaire.push(assignment)
+          this.assignment.assignmentsAFaire.push(assignment)
         } else if (assignment.statut === 'en cours') {
-          this.assginments.assignmentsEnCours.push(assignment)
+          this.assignment.assignmentsEnCours.push(assignment)
         }
         else if (assignment.statut === 'finit') {
-          this.assginments.assignmentsTermine.push(assignment)
+          this.assignment.assignmentsTermine.push(assignment)
         }
         else if (assignment.statut === 'rendu') {
-          this.assginments.assignmentsRendu.push(assignment)
+          this.assignment.zassignmentsRendu.push(assignment)
         }
       })
     }))
@@ -94,7 +97,6 @@ export class AssignmentsComponent implements OnInit {
   handleDelete(assignment) {
     this.assignmentsService.deleteAssignment(assignment).subscribe(msg => {
       this.loading = true
-      console.log("delted data", msg)
       this.getAssignments()
       this.loading = false
       this.assignmentsService.msg.next(msg)
@@ -102,11 +104,26 @@ export class AssignmentsComponent implements OnInit {
       (error) => {
         this.assignmentsService.msg.next(error)
       })
-    console.log("delete clicked", assignment)
   }
 
-  handlesearch(){
+  handlesearch() {
     console.log("clicked search ---")
   }
 
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.filter.pageSize = e.pageSize;
+    this.filter.page = e.pageIndex;
+    this.getAssignments()
+  }
+
+  filteringStatuts(statut: String) {
+    if (this.assignmentsService.statuts.includes(statut) && this.filter.statuts.includes(statut)) {
+      const index = this.filter.statuts.indexOf(statut)
+      this.filter.statuts.splice(index, 1)
+    } else {
+      this.filter.statuts.push(statut)
+    }
+    this.getAssignments()
+  }
 }

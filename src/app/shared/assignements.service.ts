@@ -7,24 +7,31 @@ import { ResponseMessage } from './response-message.model';
   providedIn: 'root'
 })
 export class AssignmentsService {
-  statuts: string[] = [
+  statuts: String[] = [
     'à faire',
     'en cours',
     'finit',
-    'rendu', 
+    'rendu',
   ]
   assignments: Assignment[] = []
   uri: String = 'http://localhost:8010/api/assignments'
   msg = new Subject<ResponseMessage>()
 
-  constructor(private http: HttpClient, ) { }
+  constructor(private http: HttpClient,) { }
 
-  getAssignments(): Observable<Assignment[]> {
-    return this.http.get<Assignment[]>(`${this.uri}`)
+  getAssignments(filter): Observable<any> {
+    console.log("filter", filter)
+    let search = '?'
+    // ?professeur=Cabrio&nom=swag
+    for (let element in filter) {
+     filter[element] ? search += `${element}=${filter[element]}&` : search += ''
+    }
+    console.log("search ", search)
+    return this.http.get<Assignment[]>(`${this.uri}${search}`)
   }
 
   addAssignments(assignment: Assignment): Observable<any> {
-    return this.http.post<any>(`${this.uri}/`, assignment, )
+    return this.http.post<any>(`${this.uri}/`, assignment,)
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {

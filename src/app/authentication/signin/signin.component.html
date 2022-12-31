@@ -1,0 +1,25 @@
+<div class="container">
+    <h1>Connexion</h1>
+    <div class="form">
+        <mat-form-field appearance="fill">
+            <mat-label>E-mail</mat-label>
+            <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
+            <input matInput placeholder="email@example.com" required>
+            <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Mot de passe</mat-label>
+            <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
+            <input matInput placeholder="email@example.com" required>
+            <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <div class="actions">
+            <button mat-flat-button color="primary" [routerLink]="['']">
+                Connexion
+            </button>
+            <button mat-raised-button [routerLink]="['/register']">
+                Créer un compte
+            </button>
+        </div>
+    </div>
+</div>

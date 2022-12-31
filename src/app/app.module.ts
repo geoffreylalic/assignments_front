@@ -1,7 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,7 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { AppComponent } from './app.component';
@@ -31,17 +30,20 @@ import { AuthGuard } from './shared/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UpdateAssignmentComponent } from './assignments/update-assignment/update-assignment.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatMenuModule } from '@angular/material/menu';
+import { UsersComponent } from './users/users.component';
+import { RegisterComponent } from './authentication/register/register.component';
+import { SigninComponent } from './authentication/signin/signin.component';
 
-const routes: Routes = [
+const routes: Routes = [ // todo: add authGuard
   {
     path: '',
     component: AssignmentsComponent,
-    children:[ {
-        path: 'assignment/:id',
-        // component: AssignmentDetailComponent
-        component: DialogEntryComponent
-      },
+    children: [{
+      path: 'assignment/:id',
+      component: DialogEntryComponent
+    },
     ]
   },
   {
@@ -53,6 +55,16 @@ const routes: Routes = [
     component: UpdateAssignmentComponent,
     // canActivate: [AuthGuard]
   },
+  {
+    path: 'signin',
+    component: SigninComponent,
+    // canActivate: [AuthGuard]
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    // canActivate: [AuthGuard]
+  },
   { path: '**', redirectTo: '' }
 ]
 @NgModule({
@@ -62,13 +74,23 @@ const routes: Routes = [
     AssignmentDetailComponent,
     AddAssignmentComponent,
     UpdateAssignmentComponent,
+    UsersComponent,
+    RegisterComponent,
+    SigninComponent,
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule, FormsModule,
-    MatButtonModule, MatIconModule, MatDividerModule,
-    MatFormFieldModule, MatInputModule, MatDatepickerModule,
-    MatNativeDateModule, MatListModule, MatCardModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule,
+    MatCardModule,
     MatCheckboxModule,
     RouterModule.forRoot(routes),
     MatChipsModule,
@@ -80,6 +102,8 @@ const routes: Routes = [
     DragDropModule,
     MatSnackBarModule,
     MatPaginatorModule,
+    MatMenuModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
