@@ -3,6 +3,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from './shared/assignements.service';
 import { AuthService } from './shared/auth.service';
+import { LocalStorageService } from './shared/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(private _snackBar: MatSnackBar, private _assignementService: AssignmentsService, private router: Router,
-    public route: ActivatedRoute, private authService: AuthService) { }
+    public route: ActivatedRoute, private authService: AuthService, private localStorage: LocalStorageService) { }
 
   ngOnInit(): void {
     //  handling errors/messages from different components
@@ -27,8 +28,7 @@ export class AppComponent implements OnInit {
       }
     })
     this.authService.msg.subscribe((msg) => {
-      console.log('insingning', msg)
-      if (!msg.ok) {
+      if (msg.ok === false) {
         this.openSnackBar(msg.error, 'mat-warn')
       }
     })
@@ -48,9 +48,17 @@ export class AppComponent implements OnInit {
   }
   handleAddAssignments() {
     this.router.navigate(['add'], { relativeTo: this.route });
-    // this.router.navigate([''], { relativeTo: this.route })
   }
   handleProfile() {
 
+  }
+
+  logout() {
+    this.authService.logout().subscribe(res => {
+      this.localStorage.remove('auth')
+      this.router.navigate(['/signin'], { relativeTo: this.route });
+    }, (error) => {
+      this.authService.msg.next(error)
+    })
   }
 }

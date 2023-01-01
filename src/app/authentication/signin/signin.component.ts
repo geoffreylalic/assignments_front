@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
+import { LocalStorageService } from 'src/app/shared/local-storage.service';
 
 @Component({
   selector: 'app-signin',
@@ -12,7 +13,8 @@ export class SigninComponent implements OnInit {
 
   constructor(private router: Router,
     public route: ActivatedRoute,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private localStorage: LocalStorageService) { }
   email = ''
   password = ''
 
@@ -29,15 +31,16 @@ export class SigninComponent implements OnInit {
   }
 
   login() {
-    this.authService.login({ email: this.email, password: this.password }).subscribe(msg => {
-      console.log('msg -- ', msg)
-      this.authService.msg.next(msg)
-      console.log(msg)
+    this.authService.login({ email: this.email, password: this.password }).subscribe(user => {
+      console.log('msg -- ', user)
+      this.authService.msg.next('Successfully logged in.')
+      this.localStorage.set('auth', user)
+      console.log('-----', JSON.parse(this.localStorage.get('auth')))
+      this.router.navigate([''], { relativeTo: this.route });
     }, (error) => {
       console.log("error", error)
       this.authService.msg.next(error)
     })
-    this.router.navigate([''], { relativeTo: this.route })
   }
 
 }
