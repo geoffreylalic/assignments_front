@@ -15,7 +15,7 @@ export class AssignmentsService {
   ]
   assignments: Assignment[] = []
   uri: String = 'http://localhost:8010/api/assignments'
-  msg = new Subject<ResponseMessage>()
+  msg = new Subject<any>()
 
   constructor(private http: HttpClient,) { }
 

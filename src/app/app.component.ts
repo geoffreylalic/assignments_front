@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from './shared/assignements.service';
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,20 +15,22 @@ export class AppComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(private _snackBar: MatSnackBar, private _assignementService: AssignmentsService, private router: Router,
-    public route: ActivatedRoute) { }
+    public route: ActivatedRoute, private authService: AuthService) { }
 
   ngOnInit(): void {
     //  handling errors/messages from different components
     this._assignementService.msg.subscribe((msg) => {
-      console.log("msg in app component", msg)
-      if (msg.error === undefined) {
-        console.log("ici message", msg)
+      if (msg.ok === undefined) {
         this.openSnackBar(msg.message, 'mat-primary')
-      } else if (msg.message === undefined) {
-        console.log("ici error", msg)
+      } else if (!msg.ok) {
+        this.openSnackBar(msg, 'mat-warn')
+      }
+    })
+    this.authService.msg.subscribe((msg) => {
+      console.log('insingning', msg)
+      if (!msg.ok) {
         this.openSnackBar(msg.error, 'mat-warn')
       }
-
     })
   }
 
@@ -40,14 +43,14 @@ export class AppComponent implements OnInit {
     });
   }
 
-  handleHome(){
+  handleHome() {
     this.router.navigate([''], { relativeTo: this.route });
   }
-  handleAddAssignments(){
+  handleAddAssignments() {
     this.router.navigate(['add'], { relativeTo: this.route });
     // this.router.navigate([''], { relativeTo: this.route })
   }
-  handleProfile(){
+  handleProfile() {
 
   }
 }

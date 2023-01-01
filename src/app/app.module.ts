@@ -40,32 +40,33 @@ const routes: Routes = [ // todo: add authGuard
   {
     path: '',
     component: AssignmentsComponent,
+    canActivate: [AuthGuard],
     children: [{
       path: 'assignment/:id',
-      component: DialogEntryComponent
+      component: DialogEntryComponent,
+      canActivate: [AuthGuard]
     },
     ]
   },
   {
     path: 'add',
-    component: AddAssignmentComponent
+    component: AddAssignmentComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'assignment/:id/edit',
     component: UpdateAssignmentComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'signin',
     component: SigninComponent,
-    // canActivate: [AuthGuard]
   },
   {
     path: 'register',
     component: RegisterComponent,
-    // canActivate: [AuthGuard]
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'signin' }
 ]
 @NgModule({
   declarations: [
