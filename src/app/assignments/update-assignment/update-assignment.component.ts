@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignements.service';
 import { ProfessorsService } from 'src/app/shared/professors.service';
-import { Assignment } from '../assignment.model';
+import { Assignment } from '../../models/assignment.model';
 
 @Component({
   selector: 'app-update-assignment',

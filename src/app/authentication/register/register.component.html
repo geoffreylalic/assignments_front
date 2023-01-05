@@ -4,39 +4,39 @@
         <mat-form-field appearance="fill">
             <mat-label>Prénom</mat-label>
             <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
-            <input matInput placeholder="email@example.com" required>
+            <input matInput placeholder="email@example.com" required [(ngModel)]="name" name="name">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Nom</mat-label>
             <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
-            <input matInput placeholder="email@example.com" required>
+            <input matInput placeholder="email@example.com" required [(ngModel)]="lastName" name="lastName">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Classe</mat-label>
             <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
-            <input matInput placeholder="email@example.com" required>
+            <input matInput placeholder="email@example.com" required [(ngModel)]="year" name="year">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>E-mail</mat-label>
             <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
-            <input matInput placeholder="email@example.com" required>
+            <input matInput placeholder="email@example.com" required [(ngModel)]="email" name="email">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Mot de passe</mat-label>
             <!-- <input matInput placeholder="email@example.com" [FormControl]="emailFormControl"  required> -->
-            <input matInput placeholder="email@example.com" required>
+            <input matInput placeholder="email@example.com" required [(ngModel)]="password" name="password">
             <mat-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <div class="actions">
-            <button mat-flat-button color="primary" [routerLink]="['/signin']">
+            <button mat-flat-button color="primary" (click)="handleRegister()">
                 Créer
             </button>
             <button mat-raised-button [routerLink]="['/signin']">
-                Se connecter
+                Annuler
             </button>
         </div>
     </div>

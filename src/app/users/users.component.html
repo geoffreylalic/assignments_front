@@ -1,1 +1,25 @@
-<p>users works!</p>
+<h1 class="title">Modifier le profile</h1>
+<form (submit)="assignmentForm.reset()" ngForm #assignmentForm class="form">
+  <mat-form-field class="field">
+    <mat-label>Prénom</mat-label>
+    <input matInput [(ngModel)]="name" name="name">
+  </mat-form-field>
+  <mat-form-field class="field">
+    <mat-label>Nom de famille</mat-label>
+    <input matInput [(ngModel)]="lastName" name="lastName">
+  </mat-form-field>
+  <mat-form-field class="field">
+    <mat-label>Année scholaire</mat-label>
+    <input matInput [(ngModel)]="year" name="year">
+  </mat-form-field>
+  <mat-form-field class="field">    
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="email" name="email">
+  </mat-form-field>
+  <button mat-stroked-button color="primary" class="field" (click)="onSubmit()">
+    Modifier
+  </button>
+  <button mat-stroked-button color="primary" class="field" (click)="handleGoBack()">
+    Annuler
+  </button>
+</form>

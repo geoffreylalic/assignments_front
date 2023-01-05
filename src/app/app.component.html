@@ -1,6 +1,7 @@
 <mat-toolbar class="header">
     <a routerLink="">{{title}} </a>
-    <div>
+    <div *ngIf="auth ||auth !== null">Welcome {{auth.user.name}} {{auth.user.lastName}}</div>
+    <div *ngIf="auth ||auth !== null">
         <button mat-button color="primary" (click)="handleAddAssignments()">
             <mat-icon>add_circle</mat-icon>
         </button>
@@ -8,7 +9,7 @@
             <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="handleProfile()">
                 <mat-icon>manage_accounts</mat-icon>
                 Modify profile
             </button>
@@ -22,3 +23,7 @@
 </mat-toolbar>
 
 <router-outlet></router-outlet>
+
+<ng-template #loadingBlock>
+    <mat-spinner></mat-spinner>
+  </ng-template>

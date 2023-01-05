@@ -3,7 +3,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from '../../shared/assignements.service';
-import { Assignment } from '../assignment.model';
+import { Assignment } from '../../models/assignment.model';
 import { DataService } from '../assignments.component';
 
 @Component({

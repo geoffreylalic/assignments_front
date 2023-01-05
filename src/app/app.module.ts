@@ -59,6 +59,11 @@ const routes: Routes = [ // todo: add authGuard
     canActivate: [AuthGuard]
   },
   {
+    path: 'edit-user',
+    component: UsersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'signin',
     component: SigninComponent,
   },

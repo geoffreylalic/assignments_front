@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AssignmentsService } from '../shared/assignements.service'
-import { Assignment } from './assignment.model';
+import { Assignment } from '../models/assignment.model';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { PageEvent } from '@angular/material/paginator';
@@ -72,6 +72,7 @@ export class AssignmentsComponent implements OnInit {
   }
 
   getAssignments() {
+    this.loading = true
     this.assignment.assignmentsAFaire = []
     this.assignment.assignmentsEnCours = []
     this.assignment.assignmentsTermine = []
@@ -91,14 +92,12 @@ export class AssignmentsComponent implements OnInit {
           this.assignment.zassignmentsRendu.push(assignment)
         }
       })
-    }))
+    }), () => this.loading = false,)
   }
 
   handleDelete(assignment) {
     this.assignmentsService.deleteAssignment(assignment).subscribe(msg => {
-      this.loading = true
       this.getAssignments()
-      this.loading = false
       this.assignmentsService.msg.next(msg)
     },
       (error) => {

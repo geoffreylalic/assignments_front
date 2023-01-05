@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignements.service';
 import { ProfessorsService } from 'src/app/shared/professors.service';
-import { Assignment } from '../assignment.model';
+import { Assignment } from '../../models/assignment.model';
 
 @Component({
   selector: 'app-add-assignment',
@@ -21,7 +21,7 @@ export class AddAssignmentComponent implements OnInit {
   dateDeRendu!: Date;
   subject = null;
   professors = []
-  constructor(private assignmentService: AssignmentsService, private _assignmentsService: AssignmentsService, private router: Router, private route: ActivatedRoute, private professorsService: ProfessorsService ) { }
+  constructor(private assignmentService: AssignmentsService, private router: Router, private route: ActivatedRoute, private professorsService: ProfessorsService ) { }
 
   ngOnInit(): void {
     this.professorsService.getProfessors().subscribe((res) => this.professors=res)
@@ -39,7 +39,9 @@ export class AddAssignmentComponent implements OnInit {
     nouvelAssignment.description = this.description;
     nouvelAssignment.subject = this.subject;
     this.assignmentService.addAssignments(nouvelAssignment).subscribe(msg => {
-      this._assignmentsService.msg.next(msg)
+      this.assignmentService.msg.next(msg)
+    }, (error)=> {
+      this.assignmentService.msg.next(error)
     })
     this.router.navigate([''], {relativeTo: this.route})
   }

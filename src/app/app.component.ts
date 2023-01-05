@@ -14,11 +14,18 @@ export class AppComponent implements OnInit {
   title = 'Assignments Tracker';
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  auth: any = {}
+  isLoading: boolean = false
 
   constructor(private _snackBar: MatSnackBar, private _assignementService: AssignmentsService, private router: Router,
-    public route: ActivatedRoute, private authService: AuthService, private localStorage: LocalStorageService) { }
+    public route: ActivatedRoute, private authService: AuthService, private localStorage: LocalStorageService) {
+    this.authService.getLoggedUser.subscribe(auth => this.auth = auth);
+  }
 
   ngOnInit(): void {
+    this.isLoading = true
+    this.auth = JSON.parse(this.localStorage.get("auth"))
+    console.log("ng init", this.auth)
     //  handling errors/messages from different components
     this._assignementService.msg.subscribe((msg) => {
       if (msg.ok === undefined) {
@@ -32,6 +39,7 @@ export class AppComponent implements OnInit {
         this.openSnackBar(msg.error, 'mat-warn')
       }
     })
+    this.isLoading = false
   }
 
   openSnackBar(msg, className) {
@@ -50,12 +58,13 @@ export class AppComponent implements OnInit {
     this.router.navigate(['add'], { relativeTo: this.route });
   }
   handleProfile() {
-
+    this.router.navigate(['edit-user'], { relativeTo: this.route });
   }
 
   logout() {
     this.authService.logout().subscribe(res => {
       this.localStorage.remove('auth')
+      this.authService.getLoggedUser.emit(null)
       this.router.navigate(['/signin'], { relativeTo: this.route });
     }, (error) => {
       this.authService.msg.next(error)
