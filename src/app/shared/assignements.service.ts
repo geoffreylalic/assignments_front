@@ -16,7 +16,8 @@ export class AssignmentsService {
     'rendu',
   ]
   assignments: Assignment[] = []
-  uri: String = 'http://localhost:8010/api/assignments'
+  // uri: String = 'http://localhost:8010/api/assignments'
+  uri: String = 'https://assignments-back.onrender.com/api/assignments'
   msg = new Subject<any>()
   token = JSON.parse(this.localStorage.get('auth')) ? JSON.parse(this.localStorage.get('auth')).token : ""
   headers = new HttpHeaders()

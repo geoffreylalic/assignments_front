@@ -71,7 +71,7 @@ const routes: Routes = [ // todo: add authGuard
     path: 'register',
     component: RegisterComponent,
   },
-  { path: '**', redirectTo: 'signin' }
+  { path: '**', redirectTo: '', canActivate: [AuthGuard] }
 ]
 @NgModule({
   declarations: [

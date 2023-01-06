@@ -11,7 +11,8 @@ import { LocalStorageService } from './local-storage.service';
 export class AuthService {
   @Output() getLoggedUser: EventEmitter<any> = new EventEmitter();
   isLoggedin = false
-  uri = 'http://localhost:8010/api/'
+  // uri = 'http://localhost:8010/api/'
+  uri = 'https://assignments-back.onrender.com/api/'
   msg = new Subject<any>()
   token = JSON.parse(this.localStorage.get('auth')) ? JSON.parse(this.localStorage.get('auth')).token : ""
   headers = new HttpHeaders()
