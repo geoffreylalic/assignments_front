@@ -43,11 +43,11 @@ export class UpdateAssignmentComponent implements OnInit {
     this.isLoading = true
     this.assignmentsService.updateAssignment(this.assignment).subscribe((msg) => {
       this.assignmentsService.msg.next(msg)
+      console.log("msg", msg)
     },
       (error) => {
-        if (error) {
-          this.assignmentsService.msg.next(error)
-        }
+        console.log("error", error)
+        this.assignmentsService.msg.next(error)
       })
     this.isLoading = false
 

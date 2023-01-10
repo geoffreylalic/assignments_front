@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     //  handling errors/messages from different components
     this._assignementService.msg.subscribe((msg) => {
       if (msg.ok === undefined) {
-        this.openSnackBar(msg.message, 'mat-primary')
+        this.openSnackBar(msg, 'mat-primary')
       } else if (!msg.ok) {
         this.openSnackBar(msg, 'mat-warn')
       }

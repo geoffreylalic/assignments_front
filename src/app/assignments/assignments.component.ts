@@ -105,10 +105,6 @@ export class AssignmentsComponent implements OnInit {
       })
   }
 
-  handlesearch() {
-    console.log("clicked search ---")
-  }
-
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.filter.pageSize = e.pageSize;

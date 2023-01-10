@@ -41,6 +41,7 @@ export class AddAssignmentComponent implements OnInit {
     this.assignmentService.addAssignments(nouvelAssignment).subscribe(msg => {
       this.assignmentService.msg.next(msg)
     }, (error)=> {
+      console.log("error", error)
       this.assignmentService.msg.next(error)
     })
     this.router.navigate([''], {relativeTo: this.route})

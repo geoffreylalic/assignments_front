@@ -40,15 +40,15 @@ export class AssignmentsService {
   }
 
   addAssignments(assignment: Assignment): Observable<any> {
-    return this.http.post<any>(`${this.uri}/`, assignment, { headers: this.headers })
+    return this.http.post(`${this.uri}/`, assignment, { headers: this.headers, responseType: 'text' })
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {
-    return this.http.put(`${this.uri}/${assignment._id}`, assignment, { headers: this.headers })
+    return this.http.put(`${this.uri}/${assignment._id}`, assignment, { headers: this.headers, responseType: 'text' })
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {
-    return this.http.delete(`${this.uri}/${assignment._id}`, { headers: this.headers })
+    return this.http.delete(`${this.uri}/${assignment._id}`, { headers: this.headers, responseType: 'text' })
   }
 
   getAssignment(id: String): Observable<Assignment> {
