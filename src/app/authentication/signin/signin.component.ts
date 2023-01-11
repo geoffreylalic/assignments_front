@@ -36,11 +36,8 @@ export class SigninComponent implements OnInit {
       this.authService.msg.next('Successfully logged in.')
       this.localStorage.set('auth', user)
       this.authService.getLoggedUser.emit(JSON.parse(this.localStorage.get('auth')))
-      let timeout
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        this.router.navigate([''], { relativeTo: this.route });
-      }, 500);
+      console.log(this.localStorage.get('auth'))
+      this.router.navigate([''], { relativeTo: this.route });
     }, (error) => {
       console.log("error", error)
       this.authService.msg.next(error)

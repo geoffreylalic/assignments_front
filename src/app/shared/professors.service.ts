@@ -9,7 +9,6 @@ import { ResponseMessage } from '../models/response-message.model';
 })
 export class ProfessorsService {
   uri: String = 'https://assignments-back.onrender.com/api/professors/'
-  // uri: String = 'http://localhost:8010/api/professors/'
   msg = new Subject<ResponseMessage>()
 
   constructor(private http: HttpClient,) { }

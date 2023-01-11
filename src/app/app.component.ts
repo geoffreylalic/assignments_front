@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from './shared/assignements.service';
 import { AuthService } from './shared/auth.service';
 import { LocalStorageService } from './shared/local-storage.service';
+import { BDDPeupler } from 'dist/assignments_front/assets/data/data';
+import { Assignment } from './models/assignment.model';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit {
   isLoading: boolean = false
 
   constructor(private _snackBar: MatSnackBar, private _assignementService: AssignmentsService, private router: Router,
-    public route: ActivatedRoute, private authService: AuthService, private localStorage: LocalStorageService) {
+    public route: ActivatedRoute, private authService: AuthService, private localStorage: LocalStorageService, private assignmentService: AssignmentsService) {
     this.authService.getLoggedUser.subscribe(auth => this.auth = auth);
   }
 
@@ -69,5 +71,24 @@ export class AppComponent implements OnInit {
     }, (error) => {
       this.authService.msg.next(error)
     })
+  }
+
+  peuplerBD() {
+    BDDPeupler.forEach(a => {
+      let nouvelAssignment = new Assignment();
+      nouvelAssignment.nom = a.nom;
+      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      nouvelAssignment.statut = a.statut;
+      nouvelAssignment.professeur = a.professeur;
+      nouvelAssignment.description = a.description;
+      nouvelAssignment.subject = a.subject;
+      this.assignmentService.addAssignments(nouvelAssignment).subscribe(msg => {
+        this.assignmentService.msg.next(msg)
+      }, (error) => {
+        console.log("error", error)
+        this.assignmentService.msg.next(error)
+      })
+    })
+
   }
 }

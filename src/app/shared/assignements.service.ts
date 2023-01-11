@@ -19,11 +19,6 @@ export class AssignmentsService {
   // uri: String = 'http://localhost:8010/api/assignments'
   uri: String = 'https://assignments-back.onrender.com/api/assignments'
   msg = new Subject<any>()
-  token = JSON.parse(this.localStorage.get('auth')) ? JSON.parse(this.localStorage.get('auth')).token : ""
-  headers = new HttpHeaders()
-    .set('content-type', 'application/json')
-    .set('Access-Control-Allow-Origin', '*')
-    .set('x-access-token', this.token)
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
@@ -34,24 +29,22 @@ export class AssignmentsService {
     for (let element in filter) {
       filter[element] ? search += `${element}=${filter[element]}&` : search += ''
     }
-    console.log("search ", search)
-    console.log("header", this.headers)
-    return this.http.get<Assignment[]>(`${this.uri}${search}`, { headers: this.headers })
+    return this.http.get<Assignment[]>(`${this.uri}${search}`)
   }
 
   addAssignments(assignment: Assignment): Observable<any> {
-    return this.http.post(`${this.uri}/`, assignment, { headers: this.headers, responseType: 'text' })
+    return this.http.post(`${this.uri}/`, assignment, { responseType: 'text' })
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {
-    return this.http.put(`${this.uri}/${assignment._id}`, assignment, { headers: this.headers, responseType: 'text' })
+    return this.http.put(`${this.uri}/${assignment._id}`, assignment, { responseType: 'text' })
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {
-    return this.http.delete(`${this.uri}/${assignment._id}`, { headers: this.headers, responseType: 'text' })
+    return this.http.delete(`${this.uri}/${assignment._id}`, { responseType: 'text' })
   }
 
   getAssignment(id: String): Observable<Assignment> {
-    return this.http.get<Assignment>(`${this.uri}/${id}`, { headers: this.headers })
+    return this.http.get<Assignment>(`${this.uri}/${id}`)
   }
 }

@@ -27,7 +27,7 @@ import { AddAssignmentComponent } from './assignments/add-assignment/add-assignm
 import { RouterModule, Routes } from '@angular/router';
 import { compileClassMetadata } from '@angular/compiler';
 import { AuthGuard } from './shared/auth.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UpdateAssignmentComponent } from './assignments/update-assignment/update-assignment.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -35,6 +35,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { SigninComponent } from './authentication/signin/signin.component';
+import { TokenInterceptor } from './shared/token.interceptor';
 
 const routes: Routes = [ // todo: add authGuard
   {
@@ -111,7 +112,9 @@ const routes: Routes = [ // todo: add authGuard
     MatMenuModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
