@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from './shared/assignements.service';
 import { AuthService } from './shared/auth.service';
 import { LocalStorageService } from './shared/local-storage.service';
-import { BDDPeupler } from 'dist/assignments_front/assets/data/data';
-import { Assignment } from './models/assignment.model';
 
 @Component({
   selector: 'app-root',
@@ -73,22 +71,4 @@ export class AppComponent implements OnInit {
     })
   }
 
-  peuplerBD() {
-    BDDPeupler.forEach(a => {
-      let nouvelAssignment = new Assignment();
-      nouvelAssignment.nom = a.nom;
-      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      nouvelAssignment.statut = a.statut;
-      nouvelAssignment.professeur = a.professeur;
-      nouvelAssignment.description = a.description;
-      nouvelAssignment.subject = a.subject;
-      this.assignmentService.addAssignments(nouvelAssignment).subscribe(msg => {
-        this.assignmentService.msg.next(msg)
-      }, (error) => {
-        console.log("error", error)
-        this.assignmentService.msg.next(error)
-      })
-    })
-
-  }
 }
